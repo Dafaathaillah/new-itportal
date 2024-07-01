@@ -13,12 +13,6 @@ class InvApController extends Controller
         return response()->json($invap);
     }
 
-    // public function store(Request $request)
-    // {
-        // $invap = InvAp::create($request->all());
-        // return response()->json($invap, 201);
-    // }
-
     public function store(Request $request)
     {
         $invap_get_data = InvAp::find($request->id);
@@ -40,16 +34,6 @@ class InvApController extends Controller
         }
         return response()->json($invap);
     }
-
-    // public function update(Request $request, $id)
-    // {
-    //     $invap = InvAp::find($id);
-    //     if (is_null($invap)) {
-    //         return response()->json(['message' => 'AP Device not found'], 404);
-    //     }
-    //     $invap->update($request->all());
-    //     return response()->json($invap);
-    // }
 
     public function destroy($id)
     {
