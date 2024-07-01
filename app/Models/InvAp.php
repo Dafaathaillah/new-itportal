@@ -22,27 +22,27 @@ class InvAp extends Model
         'note',
     ];
 
-    public static function boot()
-    {
-        parent::boot();
+    // public static function boot()
+    // {
+    //     parent::boot();
 
-        static::creating(function ($model) {
-            $model->id = self::generateInventoryNumber();
-        });
-    }
+    //     static::creating(function ($model) {
+    //         $model->id = self::generateInventoryNumber();
+    //     });
+    // }
 
-    public static function generateInventoryNumber()
-    {
-        $lastItem = self::orderBy('id', 'desc')->first();
-        $lastId = $lastItem ? $lastItem->id : null;
+    // public static function generateInventoryNumber()
+    // {
+    //     $lastItem = self::orderBy('id', 'desc')->first();
+    //     $lastId = $lastItem ? $lastItem->id : null;
 
-        if ($lastId) {
-            $number = (int) substr($lastId, 3);
-            $newNumber = str_pad($number + 1, 3, '0', STR_PAD_LEFT);
-        } else {
-            $newNumber = str_pad(1, 3, '0', STR_PAD_LEFT);
-        }
+    //     if ($lastId) {
+    //         $number = (int) substr($lastId, 3);
+    //         $newNumber = str_pad($number + 1, 3, '0', STR_PAD_LEFT);
+    //     } else {
+    //         $newNumber = str_pad(1, 3, '0', STR_PAD_LEFT);
+    //     }
 
-        return 'PPABIBAP' . $newNumber;
-    }
+    //     return 'PPABIBAP' . $newNumber;
+    // }
 }

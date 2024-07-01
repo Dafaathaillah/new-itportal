@@ -1,8 +1,8 @@
 <?php
 
-namespace Switchp\Http\Controllers;
+namespace App\Http\Controllers;
 
-use Switchp\Models\InvSwitch;
+use App\Models\InvSwitch;
 use Illuminate\Http\Request;
 
 class InvSwitchController extends Controller

@@ -1,8 +1,8 @@
 <?php
 
-namespace Wirellessp\Http\Controllers;
+namespace App\Http\Controllers;
 
-use Wirellessp\Models\InvWirelless;
+use App\Models\InvWirelless;
 use Illuminate\Http\Request;
 
 class InvWirellessController extends Controller
