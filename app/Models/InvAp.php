@@ -18,7 +18,7 @@ class InvAp extends Model
         'device_type',
         'device_model',
         'location',
-        'satatus',
+        'status',
         'note',
     ];
 }
