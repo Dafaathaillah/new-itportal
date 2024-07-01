@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\InvApController;
+use App\Http\Controllers\InvNvrController;
 use App\Http\Controllers\InvSwitchController;
 use App\Http\Controllers\InvWirellessController;
 use App\Http\Controllers\KomputerController;
@@ -18,4 +19,5 @@ Route::prefix('inventory')->group(function () {
     Route::apiResource('access_point', InvApController::class);   
     Route::apiResource('switch', InvSwitchController::class);   
     Route::apiResource('wirelless', InvWirellessController::class);   
+    Route::apiResource('nvr', InvNvrController::class);   
 });
