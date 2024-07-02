@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\InvApController;
+use App\Http\Controllers\InvCctvController;
+use App\Http\Controllers\InvMobileTowerController;
 use App\Http\Controllers\InvNvrController;
 use App\Http\Controllers\InvSwitchController;
+use App\Http\Controllers\InvTowerController;
 use App\Http\Controllers\InvWirellessController;
 use App\Http\Controllers\KomputerController;
 use Illuminate\Http\Request;
@@ -20,4 +23,7 @@ Route::prefix('inventory')->group(function () {
     Route::apiResource('switch', InvSwitchController::class);   
     Route::apiResource('wirelless', InvWirellessController::class);   
     Route::apiResource('nvr', InvNvrController::class);   
+    Route::apiResource('cctv', InvCctvController::class);   
+    Route::apiResource('mobile_tower', InvMobileTowerController::class);   
+    Route::apiResource('tower_blc', InvTowerController::class);   
 });
