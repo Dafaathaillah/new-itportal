@@ -49,4 +49,8 @@ Route::prefix('inventory')->group(function () {
 Route::prefix('peminjaman')->group(function () {
     Route::apiResource('komputer', ComputerLoanController::class);   
     Route::apiResource('laptop', LaptopLoanController::class);   
+    Route::post('store_history_computer_loan', [ComputerLoanController::class, 'store_history_loan'])->name('api.storeLoanComputer');
+    Route::get('get_data_history_computer_loan', [ComputerLoanController::class, 'get_history_loan'])->name('api.getHistoryData');
+    Route::post('store_history_laptop_loan', [LaptopLoanController::class, 'store_history_loan'])->name('api.storeLoanLaptop');
+    Route::get('get_data_history_laptop_loan', [LaptopLoanController::class, 'get_history_loan'])->name('api.getHistoryData');
 });
