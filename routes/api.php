@@ -50,7 +50,9 @@ Route::prefix('peminjaman')->group(function () {
     Route::apiResource('komputer', ComputerLoanController::class);   
     Route::apiResource('laptop', LaptopLoanController::class);   
     Route::post('store_history_computer_loan', [ComputerLoanController::class, 'store_history_loan'])->name('api.storeLoanComputer');
+    Route::post('update_history_computer_loan', [ComputerLoanController::class, 'update_history_loan'])->name('api.updateLoanComputer');
     Route::get('get_data_history_computer_loan', [ComputerLoanController::class, 'get_history_loan'])->name('api.getHistoryData');
     Route::post('store_history_laptop_loan', [LaptopLoanController::class, 'store_history_loan'])->name('api.storeLoanLaptop');
+    Route::post('update_history_laptop_loan', [LaptopLoanController::class, 'update_history_loan'])->name('api.updateLoanLaptop');
     Route::get('get_data_history_laptop_loan', [LaptopLoanController::class, 'get_history_loan'])->name('api.getHistoryData');
 });
