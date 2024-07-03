@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ComputerLoan;
+use App\Models\HistoryComputerLoan;
 use Illuminate\Http\Request;
 
 class ComputerLoanController extends Controller
@@ -23,6 +24,41 @@ class ComputerLoanController extends Controller
             $computerLoan = ComputerLoan::firstWhere('id', $request->id)->update($request->all());
             return response()->json($computerLoan, 201);
         }
+    }
+
+    public function get_history_loan()
+    {
+        $historyComputerLoan = HistoryComputerLoan::all();
+        return response()->json($historyComputerLoan);
+    }
+
+    public function store_history_loan(Request $request)
+    {
+        // Validasi data input
+        $request->validate([
+            'inventory_number' => 'required|string|max:255',
+            'asset_number' => 'nullable|string',
+            'nik' => 'nullable|string',
+            'name' => 'nullable|string',
+            'position' => 'nullable|string',
+            'department' => 'nullable|string',
+            'date_of_loan' => 'nullable|string',
+            'link' => 'nullable|string',
+            'pic' => 'nullable|string',
+        ]);
+
+        $historyComputerLoan = HistoryComputerLoan::create($request->all());
+        return response()->json($historyComputerLoan, 201);
+        
+        // Masukkan data satu per satu ke dalam model
+        // $item = new Item();
+        // $item->name = $request->name;
+        // $item->description = $request->description;
+        // $item->save();
+
+        // Kembalikan respon JSON dengan pesan sukses
+        // return response()->json(['message' => 'Item berhasil ditambahkan!'], 201);
+        return response()->json($request);
     }
 
     public function show($id)
