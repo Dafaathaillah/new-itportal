@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class LaptopLoanController extends Controller
 {
-     public function index()
+    public function index()
     {
         $laptopLoan = LaptopLoan::all();
         return response()->json($laptopLoan);
@@ -49,7 +49,7 @@ class LaptopLoanController extends Controller
 
         $historyLaptopLoan = HistoryLaptopLoan::create($request->all());
         return response()->json($historyLaptopLoan, 201);
-        
+
         // Masukkan data satu per satu ke dalam model
         // $item = new Item();
         // $item->name = $request->name;
@@ -59,6 +59,19 @@ class LaptopLoanController extends Controller
         // Kembalikan respon JSON dengan pesan sukses
         // return response()->json(['message' => 'Item berhasil ditambahkan!'], 201);
         return response()->json($historyLaptopLoan);
+    }
+
+    public function update_history_loan(Request $request)
+    {
+        // Validasi data input
+        $request->validate([
+            'date_of_return' => 'nullable|string',
+            'remark' => 'nullable|string',
+        ]);
+
+        $history_laptop_loan_get_data = HistoryLaptopLoan::find($request->id);
+        $historyLaptopLoan = HistoryLaptopLoan::firstWhere('id', $request->id)->update($request->all());
+        return response()->json($historyLaptopLoan, 201);
     }
 
     public function show($id)
