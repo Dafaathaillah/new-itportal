@@ -61,6 +61,19 @@ class ComputerLoanController extends Controller
         return response()->json($request);
     }
 
+    public function update_history_loan(Request $request)
+    {
+        // Validasi data input
+        $request->validate([
+            'date_of_return' => 'nullable|string',
+            'remark' => 'nullable|string',
+        ]);
+
+        $history_laptop_loan_get_data = HistoryComputerLoan::find($request->id);
+        $historyComputerLoan = HistoryComputerLoan::firstWhere('id', $request->id)->update($request->all());
+        return response()->json($historyComputerLoan, 201);
+    }
+
     public function show($id)
     {
         $computerLoan = ComputerLoan::find($id);
