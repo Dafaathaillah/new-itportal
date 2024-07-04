@@ -58,7 +58,6 @@ class ComputerLoanController extends Controller
 
         // Kembalikan respon JSON dengan pesan sukses
         // return response()->json(['message' => 'Item berhasil ditambahkan!'], 201);
-        return response()->json($request);
     }
 
     public function update_history_loan(Request $request)
