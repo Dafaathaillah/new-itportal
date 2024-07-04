@@ -35,6 +35,15 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
+        Schema::create('user_alls', function (Blueprint $table) {
+            $table->id();
+            $table->string('nrp', 255);
+            $table->string('username', 255);
+            $table->string('department', 255);
+            $table->string('position', 255);
+            $table->timestamps();
+        });
     }
 
     /**
