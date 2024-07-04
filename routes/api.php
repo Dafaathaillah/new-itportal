@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AduanController;
 use App\Http\Controllers\ComputerLoanController;
 use App\Http\Controllers\InvApController;
 use App\Http\Controllers\InvCctvController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\InvTowerController;
 use App\Http\Controllers\InvWirellessController;
 use App\Http\Controllers\KomputerController;
 use App\Http\Controllers\LaptopLoanController;
+use App\Http\Controllers\UserAllController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -56,3 +58,9 @@ Route::prefix('peminjaman')->group(function () {
     Route::post('update_history_laptop_loan', [LaptopLoanController::class, 'update_history_loan'])->name('api.updateLoanLaptop');
     Route::get('get_data_history_laptop_loan', [LaptopLoanController::class, 'get_history_loan'])->name('api.getHistoryData');
 });
+
+Route::apiResource('users_all', UserAllController::class); 
+
+Route::prefix('itportal')->group(function () {
+    Route::apiResource('aduan', AduanController::class);   
+});  
