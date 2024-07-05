@@ -63,4 +63,5 @@ Route::apiResource('users_all', UserAllController::class);
 
 Route::prefix('itportal')->group(function () {
     Route::apiResource('aduan', AduanController::class);   
+    Route::post('aduan_update_closing', [AduanController::class, 'update_aduan'])->name('api.updateAduan');
 });  
