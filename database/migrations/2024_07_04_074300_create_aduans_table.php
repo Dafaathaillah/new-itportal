@@ -16,10 +16,11 @@ return new class extends Migration
             $table->string('complaint_code', 255)->nullable();
             $table->string('complaint_image', 255)->nullable();
             $table->string('inventory_number', 255)->nullable();
-            $table->string('date_of_complaint', 255)->nullable();
+            $table->dateTime('date_of_complaint')->nullable();
             $table->dateTime('start_response')->nullable();
             $table->dateTime('start_progress')->nullable();
-            $table->string('respons_time', 255)->nullable();
+            $table->dateTime('end_progress')->nullable();
+            $table->string('response_time', 255)->nullable();
             $table->string('category_name', 255)->nullable();
             $table->string('complaint_note', 255)->nullable();
             $table->string('complaint_name', 255)->nullable();
