@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('serial_number', 255);
             $table->string('aplikasi', 255);
             
-            $table->unsignedBigInteger('users_id');
-            $table->foreign('users_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->unsignedBigInteger('user_alls_id');
+            $table->foreign('user_alls_id')->references('id')->on('user_alls')->cascadeOnDelete();
 
             $table->string('license', 255);
             $table->string('ip_address', 255);
