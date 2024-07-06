@@ -26,6 +26,6 @@ class InvLaptop extends Model
         'condition',
         'note',
         'link_documentation_asset_image',
-        'users_id',
+        'user_alls_id',
     ];
 }
