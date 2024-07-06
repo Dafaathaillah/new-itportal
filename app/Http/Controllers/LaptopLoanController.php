@@ -78,7 +78,7 @@ class LaptopLoanController extends Controller
     {
         $laptopLoan = LaptopLoan::find($id);
         if (is_null($laptopLoan)) {
-            return response()->json(['message' => 'Computers Data not found'], 404);
+            return response()->json(['message' => 'Laptop Loan Data not found'], 404);
         }
         return response()->json($laptopLoan);
     }
@@ -87,7 +87,7 @@ class LaptopLoanController extends Controller
     {
         $laptopLoan = LaptopLoan::find($id);
         if (is_null($laptopLoan)) {
-            return response()->json(['message' => 'Computers Data not found'], 404);
+            return response()->json(['message' => 'Laptop Loan Data not found'], 404);
         }
         $laptopLoan->delete();
         return response()->json(null, 204);
