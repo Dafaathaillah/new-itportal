@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\InvPrinter;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class InvPrinterController extends Controller
@@ -15,6 +16,23 @@ class InvPrinterController extends Controller
 
     public function store(Request $request)
     {
+
+        // start generate code
+        $currentDate = Carbon::now();
+        $year = $currentDate->format('y');
+        $month = $currentDate->month;
+        $day = $currentDate->day;
+
+        $maxId = InvPrinter::max('id');
+
+        if (is_null($maxId)) {
+            $maxId = 0;
+        }
+
+        $uniqueString = 'PPABIBPRT' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
+        $request['printer_code'] = $uniqueString;
+        // end generate code
+
         $invPrinter_get_data = InvPrinter::find($request->id);
         if (empty($invPrinter_get_data)) {
             $invPrinter = InvPrinter::create($request->all());
@@ -23,7 +41,6 @@ class InvPrinterController extends Controller
             $invPrinter = InvPrinter::firstWhere('id', $request->id)->update($request->all());
             return response()->json($invPrinter, 201);
         }
-
     }
 
     public function show($id)
