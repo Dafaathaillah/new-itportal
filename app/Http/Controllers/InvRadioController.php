@@ -30,7 +30,7 @@ class InvRadioController extends Controller
     {
         $invRadio = InvRadio::find($id);
         if (is_null($invRadio)) {
-            return response()->json(['message' => 'Computers Data not found'], 404);
+            return response()->json(['message' => 'Printers Data not found'], 404);
         }
         return response()->json($invRadio);
     }
@@ -39,7 +39,7 @@ class InvRadioController extends Controller
     {
         $invRadio = InvRadio::find($id);
         if (is_null($invRadio)) {
-            return response()->json(['message' => 'Computers Data not found'], 404);
+            return response()->json(['message' => 'Printers Data not found'], 404);
         }
         $invRadio->delete();
         return response()->json(null, 204);
