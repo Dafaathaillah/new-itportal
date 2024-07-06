@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\InvAp;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class InvApController extends Controller
@@ -15,6 +16,22 @@ class InvApController extends Controller
 
     public function store(Request $request)
     {
+        // start generate code
+        $currentDate = Carbon::now();
+        $year = $currentDate->format('y');
+        $month = $currentDate->month;
+        $day = $currentDate->day;
+
+        $maxId = InvAp::max('id');
+
+        if (is_null($maxId)) {
+            $maxId = 0;
+        }
+
+        $uniqueString = 'PPABIBAP' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
+        $request['inventory_number'] = $uniqueString;
+        // end generate code
+
         $invap_get_data = InvAp::find($request->id);
         if (empty($invap_get_data)) {
             $invap = InvAp::create($request->all());
@@ -23,7 +40,6 @@ class InvApController extends Controller
             $invap = InvAp::firstWhere('id', $request->id)->update($request->all());
             return response()->json($invap, 201);
         }
-
     }
 
     public function show($id)
