@@ -47,7 +47,7 @@ class InvPrinterController extends Controller
     {
         $invPrinter = InvPrinter::find($id);
         if (is_null($invPrinter)) {
-            return response()->json(['message' => 'Computers Data not found'], 404);
+            return response()->json(['message' => 'Printers Data not found'], 404);
         }
         return response()->json($invPrinter);
     }
@@ -56,7 +56,7 @@ class InvPrinterController extends Controller
     {
         $invPrinter = InvPrinter::find($id);
         if (is_null($invPrinter)) {
-            return response()->json(['message' => 'Computers Data not found'], 404);
+            return response()->json(['message' => 'Printers Data not found'], 404);
         }
         $invPrinter->delete();
         return response()->json(null, 204);
