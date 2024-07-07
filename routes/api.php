@@ -19,6 +19,7 @@ use App\Http\Controllers\InvTowerController;
 use App\Http\Controllers\InvWirellessController;
 use App\Http\Controllers\KomputerController;
 use App\Http\Controllers\LaptopLoanController;
+use App\Http\Controllers\UnscheduleJobController;
 use App\Http\Controllers\UserAllController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -64,4 +65,6 @@ Route::apiResource('users_all', UserAllController::class);
 Route::prefix('itportal')->group(function () {
     Route::apiResource('aduan', AduanController::class);   
     Route::post('aduan_update_closing', [AduanController::class, 'update_aduan'])->name('api.updateAduan');
+    Route::apiResource('unschedule_job', UnscheduleJobController::class);   
+    Route::get('get_data_user_login', [UnscheduleJobController::class, 'get_data_user_login'])->name('api.getDataUserLogin');
 });  
