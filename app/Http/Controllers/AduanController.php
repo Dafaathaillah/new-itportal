@@ -49,7 +49,6 @@ class AduanController extends Controller
         $aduan_get_data_complaint = Aduan::find($request->id);
         if (empty($aduan_get_data_complaint)) {
             $aduan_get_data_user = UserAll::where('nrp', $request->nrp)->first();
-            // return response()->json($aduan_get_data_user['position'], 201);
             $validate['complaint_position'] = $aduan_get_data_user['position'];
             $aduan = Aduan::create($validate);
             return response()->json($aduan, 201);
