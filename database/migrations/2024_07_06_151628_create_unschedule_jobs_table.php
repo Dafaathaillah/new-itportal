@@ -25,8 +25,8 @@ return new class extends Migration
             $table->string('crew', 255)->nullable();
             $table->string('status', 255)->nullable();
             $table->string('urgency', 255)->nullable();
-            $table->timestamps();
             $table->string('remark', 255)->nullable();
+            $table->timestamps();
         });
     }
 
