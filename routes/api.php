@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AduanController;
 use App\Http\Controllers\ComputerLoanController;
+use App\Http\Controllers\GaransionLaptopController;
 use App\Http\Controllers\InvApController;
 use App\Http\Controllers\InvCctvController;
 use App\Http\Controllers\InvChannelRadioController;
@@ -34,6 +35,7 @@ Route::prefix('inventory')->group(function () {
     Route::apiResource('komputer', KomputerController::class);
     Route::apiResource('computer', InvComputerController::class);
     Route::apiResource('laptop', InvLaptopController::class);
+    Route::apiResource('garansion_laptop', GaransionLaptopController::class);
     Route::apiResource('printer', InvPrinterController::class);
     Route::apiResource('access_point', InvApController::class);   
     Route::apiResource('switch', InvSwitchController::class);   
