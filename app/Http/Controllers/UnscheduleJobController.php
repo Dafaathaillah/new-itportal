@@ -30,20 +30,20 @@ class UnscheduleJobController extends Controller
             $maxId = 0;
         }
         
-        $data_inv_laptop = DB::table('inv_laptops')->where('laptop_code', $request->inventory_number)->first();
-
+        
         $uniqueString = 'UNSCHEDULE' . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
         $request['activity_code'] = $uniqueString;
         // end generate code
-
+        
+        $data_inv_laptop = DB::table('inv_laptops')->where('laptop_code', $request->inventory_number)->first();
         
         if (!empty($request->inventory_number)) {
             $data_perangkat_breakdown = DB::table('perangkat_breakdowns')->where('inventory_number', $request->inventory_number)->first();
             if (empty($data_perangkat_breakdown)) {
                 $validatedDataPerangkatBreakdown = $request->validate([
                     'inventory_number' => 'nullable|string|max:255',
-                    'start_progress' => 'nullable|string|max:255',
-                    'end_progress' => 'nullable|string|max:255',
+                    'start_progress' => 'nullable|date_format:Y-m-d H:i:s',
+                    'end_progress' => 'nullable|date_format:Y-m-d H:i:s',
                     'location' => 'nullable|string|max:255',
                     'root_cause' => 'nullable|string|max:255',
                     'root_cause_category' => 'nullable|string|max:255',
@@ -67,8 +67,8 @@ class UnscheduleJobController extends Controller
             }else{
                 $validatedDataPerangkatBreakdown = $request->validate([
                     'inventory_number' => 'nullable|string|max:255',
-                    'start_progress' => 'required|date_format:Y-m-d H:i:s',
-                    'end_progress' => 'required|date_format:Y-m-d H:i:s',
+                    'start_progress' => 'nullable|date_format:Y-m-d H:i:s',
+                    'end_progress' => 'nullable|date_format:Y-m-d H:i:s',
                     'location' => 'nullable|string|max:255',
                     'root_cause' => 'nullable|string|max:255',
                     'root_cause_category' => 'nullable|string|max:255',

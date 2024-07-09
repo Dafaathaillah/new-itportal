@@ -25,9 +25,10 @@ return new class extends Migration
             $table->string('root_cause_category', 255)->nullable();
             $table->string('status', 255)->nullable();
             $table->string('pic', 255)->nullable();
+            $table->string('garansion_laptop_code', 255)->nullable();
 
-            $table->unsignedBigInteger('laptop_loan_id')->nullable();
-            $table->foreign('laptop_loan_id')->references('id')->on('laptop_loans')->cascadeOnDelete();
+            // $table->unsignedBigInteger('garansion_laptop_code')->nullable();
+            // $table->foreign('garansion_laptop_code')->references('id')->on('garansion_laptops')->cascadeOnDelete();
             
             $table->timestamps();
         });

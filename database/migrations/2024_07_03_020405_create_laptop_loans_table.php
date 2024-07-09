@@ -34,6 +34,23 @@ return new class extends Migration
             $table->string('last_borrower', 255);
             $table->timestamps();
         });
+
+        Schema::create('garansion_laptops', function (Blueprint $table) {
+            $table->id();
+            $table->string('garansion_code', 255)->nullable();
+            $table->unsignedBigInteger('laptop_id')->nullable();
+            $table->foreign('laptop_id')->references('id')->on('inv_laptops')->cascadeOnDelete();
+            $table->string('inventory_number', 255)->nullable();
+            $table->string('status', 255)->nullable();
+            $table->dateTime('start_progress')->nullable();
+            $table->dateTime('end_progress')->nullable();
+            $table->integer('month')->nullable();
+            $table->integer('year')->nullable();
+            $table->string('date_of_garansion')->nullable();
+            $table->string('record_data', 255)->nullable();
+            $table->string('hardware_damage', 255)->nullable();
+            $table->timestamps();
+        });
     }
 
     /**

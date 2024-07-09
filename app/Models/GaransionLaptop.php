@@ -5,23 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PerangkatBreakdown extends Model
+class GaransionLaptop extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'device_category',
+        'garansion_code',
+        'laptop_id',
         'inventory_number',
-        'device_name',
+        'status',
         'start_progress',
         'end_progress',
         'month',
         'year',
-        'location',
-        'root_cause',
-        'root_cause_category',
-        'garansion_laptop_code',
-        'status',
-        'pic',
-        'laptop_loan_id',
+        'date_of_garansion',
+        'record_data',
+        'hardware_damage',
     ];
 }
