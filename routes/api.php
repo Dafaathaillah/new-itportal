@@ -19,6 +19,7 @@ use App\Http\Controllers\InvSwitchController;
 use App\Http\Controllers\InvTowerController;
 use App\Http\Controllers\InvWirellessController;
 use App\Http\Controllers\KomputerController;
+use App\Http\Controllers\KpiDeviceController;
 use App\Http\Controllers\LaptopLoanController;
 use App\Http\Controllers\UnscheduleJobController;
 use App\Http\Controllers\UserAllController;
@@ -70,4 +71,5 @@ Route::prefix('itportal')->group(function () {
     Route::apiResource('unschedule_job', UnscheduleJobController::class);   
     Route::post('perangkat_breakdown', [UnscheduleJobController::class, 'store'])->name('api.pernagkatBreakdown');
     Route::get('get_data_user_login', [UnscheduleJobController::class, 'get_data_user_login'])->name('api.getDataUserLogin');
+    Route::apiResource('kpi_perangkat', KpiDeviceController::class);   
 });  
