@@ -30,7 +30,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-// Route::get('komputer_list', 'KomputerController@index');
+Route::apiResource('users_all', UserAllController::class); 
 
 Route::prefix('inventory')->group(function () {
     Route::apiResource('komputer', KomputerController::class);
@@ -62,8 +62,6 @@ Route::prefix('peminjaman')->group(function () {
     Route::post('update_history_laptop_loan', [LaptopLoanController::class, 'update_history_loan'])->name('api.updateLoanLaptop');
     Route::get('get_data_history_laptop_loan', [LaptopLoanController::class, 'get_history_loan'])->name('api.getHistoryData');
 });
-
-Route::apiResource('users_all', UserAllController::class); 
 
 Route::prefix('itportal')->group(function () {
     Route::apiResource('aduan', AduanController::class);   
