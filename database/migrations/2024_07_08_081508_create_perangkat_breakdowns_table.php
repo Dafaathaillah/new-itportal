@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('device_name', 255)->nullable();
             $table->dateTime('start_progress')->nullable();
             $table->dateTime('end_progress')->nullable();
+            $table->date('created_date')->nullable();
             $table->string('month')->nullable();
             $table->string('year', 255)->nullable();
             $table->string('location', 255)->nullable();

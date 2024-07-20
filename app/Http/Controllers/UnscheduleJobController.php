@@ -39,6 +39,21 @@ class UnscheduleJobController extends Controller
         
         if (!empty($request->inventory_number)) {
             $data_perangkat_breakdown = DB::table('perangkat_breakdowns')->where('inventory_number', $request->inventory_number)->first();
+            $data_laptop = DB::table('inv_laptops')->where('laptop_code', $request->inventory_number)->first();
+            $data_komputer = DB::table('inv_computers')->where('computer_code', $request->inventory_number)->first();
+            $data_printer = DB::table('inv_printers')->where('printer_code', $request->inventory_number)->first();
+            
+            if (!empty($data_laptop)) {
+                $device_category = 'Laptop';
+                $device_name = $data_laptop->laptop_name;
+            }elseif (!empty($data_komputer)) {
+                $device_category = 'Komputer';
+                $device_name = $data_komputer->computer_name;
+            }else{
+                $device_category = 'Printer';
+                $device_name = $data_printer->item_name;
+            }
+            
             if (empty($data_perangkat_breakdown)) {
                 $validatedDataPerangkatBreakdown = $request->validate([
                     'inventory_number' => 'nullable|string|max:255',
@@ -48,15 +63,17 @@ class UnscheduleJobController extends Controller
                     'root_cause' => 'nullable|string|max:255',
                     'root_cause_category' => 'nullable|string|max:255',
                     'status' => 'nullable|string|max:255',
-                    'laptop_loan_id' => 'nullable|string|max:255',
                 ]);
                 $date = Carbon::now();
                 $month = $date->format('m');
                 $year = $date->format('Y');
-    
-                $validatedDataPerangkatBreakdown['device_category'] = $request->category;
-                $validatedDataPerangkatBreakdown['device_name'] = $data_inv_laptop->laptop_name;
+                
+                $validatedDataPerangkatBreakdown['device_category'] = $device_category;
+                // dd($validatedDataPerangkatBreakdown['device_category']);
+                
+                $validatedDataPerangkatBreakdown['device_name'] = $device_name;
                 $validatedDataPerangkatBreakdown['month'] = $month;
+                $validatedDataPerangkatBreakdown['created_date'] = $date;
                 $validatedDataPerangkatBreakdown['year'] = $year;
                 $validatedDataPerangkatBreakdown['pic'] = 'DAFA BINTANG ATHAILLAH';
                 $data_unschedule_create = $request->all();
@@ -73,7 +90,6 @@ class UnscheduleJobController extends Controller
                     'root_cause' => 'nullable|string|max:255',
                     'root_cause_category' => 'nullable|string|max:255',
                     'status' => 'nullable|string|max:255',
-                    'laptop_loan_id' => 'nullable|string|max:255',
                 ]);
                 $date = Carbon::now();
                 $month = $date->format('m');
@@ -82,6 +98,7 @@ class UnscheduleJobController extends Controller
                 $validatedDataPerangkatBreakdown['device_category'] = $request->category;
                 $validatedDataPerangkatBreakdown['device_name'] = $data_inv_laptop->laptop_name;
                 $validatedDataPerangkatBreakdown['month'] = $month;
+                $validatedDataPerangkatBreakdown['created_date'] = $date;
                 $validatedDataPerangkatBreakdown['year'] = $year;
                 $validatedDataPerangkatBreakdown['pic'] = 'DAFA BINTANG ATHAILLAH';
 

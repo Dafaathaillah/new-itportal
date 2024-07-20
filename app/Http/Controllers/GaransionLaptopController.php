@@ -56,9 +56,11 @@ class GaransionLaptopController extends Controller
                 $year = $date->format('Y');
 
                 $validatedDataPerangkatBreakdown['device_category'] = 'Laptop';
+                $validatedDataPerangkatBreakdown['root_cause'] = 'GARANSI';
                 $validatedDataPerangkatBreakdown['garansion_laptop_code'] = $uniqueString;
                 $validatedDataPerangkatBreakdown['location'] = $data_inv_laptop->location;
                 $validatedDataPerangkatBreakdown['pic'] = 'DAFA BINTANG ATHAILLAH';
+                $validatedDataPerangkatBreakdown['created_date'] = Carbon::now();
                 $validatedDataPerangkatBreakdown['month'] = $month;
                 $validatedDataPerangkatBreakdown['year'] = $year;
                 $dataGaransionAdd = $request->all();
@@ -96,7 +98,9 @@ class GaransionLaptopController extends Controller
                     'end_progress' => 'nullable|date_format:Y-m-d H:i:s',
                     'status' => 'nullable|string|max:255',
                 ]);
-
+                if ($request->status == 'CLOSED') {
+                $validatedDataPerangkatBreakdown['created_date'] = Carbon::now();
+                }
                 // $validatedDataPerangkatBreakdown['garansion_laptop_code'] = $uniqueString;
                 $validatedDataPerangkatBreakdown['location'] = $data_inv_laptop->location;
                 $validatedDataPerangkatBreakdown['pic'] = 'DAFA BINTANG ATHAILLAH';

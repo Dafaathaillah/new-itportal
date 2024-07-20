@@ -14,6 +14,7 @@ class PerangkatBreakdown extends Model
         'device_name',
         'start_progress',
         'end_progress',
+        'created_date',
         'month',
         'year',
         'location',
@@ -22,6 +23,7 @@ class PerangkatBreakdown extends Model
         'garansion_laptop_code',
         'status',
         'pic',
-        'laptop_loan_id',
     ];
+
+
 }

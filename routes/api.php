@@ -69,5 +69,5 @@ Route::prefix('itportal')->group(function () {
     Route::apiResource('unschedule_job', UnscheduleJobController::class);   
     Route::post('perangkat_breakdown', [UnscheduleJobController::class, 'store'])->name('api.pernagkatBreakdown');
     Route::get('get_data_user_login', [UnscheduleJobController::class, 'get_data_user_login'])->name('api.getDataUserLogin');
-    Route::apiResource('kpi_perangkat', KpiDeviceController::class);   
+    Route::post('kpi_perangkat', [KpiDeviceController::class, 'showKpi'])->name('api.showKpiPerangkat');   
 });  
