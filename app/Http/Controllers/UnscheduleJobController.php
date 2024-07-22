@@ -120,7 +120,7 @@ class UnscheduleJobController extends Controller
     }
 
     // get data per user login/auth
-    public function get_data_user_login()
+    public function getDataUserLogin()
     {
         $request = 'MUHAMMAD MUDJAKIR';
         // $searchTerm = $request->query('crew');
