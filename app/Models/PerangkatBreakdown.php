@@ -24,6 +24,4 @@ class PerangkatBreakdown extends Model
         'status',
         'pic',
     ];
-
-
 }
