@@ -75,7 +75,7 @@ class AduanController extends Controller
 
         $task = Aduan::find($aduan_get_data_complaint->id);
         $date_of_complaint = new Carbon($task->date_of_complaint);
-        $start_response = new Carbon($task->start_response);
+        $start_response = new Carbon($request->start_response);
 
         $diff = $date_of_complaint->diff($start_response);
 
@@ -89,7 +89,6 @@ class AduanController extends Controller
 
         $validate_closing = $request->validate([
             'repair_note' => 'required|string|max:255',
-            'response_time' => $formattedDiff,
             'status' => 'nullable|string',
             'root_cause' => 'nullable|string',
             'action_repair' => 'nullable|string',
