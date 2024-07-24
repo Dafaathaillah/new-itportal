@@ -15,6 +15,7 @@ class Aduan extends Model
         'inventory_number',
         'response_time',
         'date_of_complaint',
+        'created_date',
         'start_response',
         'start_progress',
         'end_progress',

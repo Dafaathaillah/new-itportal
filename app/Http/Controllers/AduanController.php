@@ -45,6 +45,7 @@ class AduanController extends Controller
             'crew' => 'nullable|string',
         ]);
         $validate['complaint_code'] = $uniqueString;
+        $validate['created_date'] = Carbon::parse($request->date_of_complaint)->toDateString();
 
         $aduan_get_data_complaint = Aduan::find($request->id);
         if (empty($aduan_get_data_complaint)) {
