@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('complaint_image', 255)->nullable();
             $table->string('inventory_number', 255)->nullable();
             $table->dateTime('date_of_complaint')->nullable();
+            $table->date('created_date')->nullable();
             $table->dateTime('start_response')->nullable();
             $table->dateTime('start_progress')->nullable();
             $table->dateTime('end_progress')->nullable();
