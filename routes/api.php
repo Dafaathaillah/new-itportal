@@ -20,6 +20,7 @@ use App\Http\Controllers\InvTowerController;
 use App\Http\Controllers\InvWirellessController;
 use App\Http\Controllers\KomputerController;
 use App\Http\Controllers\KpiDeviceController;
+use App\Http\Controllers\KpiResponseTimeController;
 use App\Http\Controllers\KpiServerController;
 use App\Http\Controllers\LaptopLoanController;
 use App\Http\Controllers\ServerBreakdownController;
@@ -74,4 +75,5 @@ Route::prefix('itportal')->group(function () {
     Route::get('get_data_user_login', [UnscheduleJobController::class, 'get_data_user_login'])->name('api.getDataUserLogin');
     Route::post('kpi_perangkat', [KpiDeviceController::class, 'showKpi'])->name('api.showKpiPerangkat');   
     Route::post('kpi_server', [KpiServerController::class, 'showKpi'])->name('api.showKpiServer');   
+    Route::post('kpi_response_time', [KpiResponseTimeController::class, 'showKpi'])->name('api.showKpiResponseTime');   
 });  
