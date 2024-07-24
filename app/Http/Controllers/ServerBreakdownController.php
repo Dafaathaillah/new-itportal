@@ -52,7 +52,7 @@ class ServerBreakdownController extends Controller
         }
     }
 
-    
+
 
     public function show($id)
     {
