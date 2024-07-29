@@ -73,6 +73,7 @@ class InspeksiPanelBoxNetworkController extends Controller
                 //upload image
                 $findings_image = $request->file('findings_image');
                 $path_findings_image = $findings_image->store('images', 'public');
+                $new_path_findings = 'storage/' . $path_findings_image;
 
                 $dataInspection = [
                     'cleanliness' => $request->cleanliness,
@@ -87,7 +88,7 @@ class InspeksiPanelBoxNetworkController extends Controller
                     'findings_status' => $request->findings_status,
                     'due_date' => $request->due_date,
                     'pica_number' => $uniqueString,
-                    'findings_image' => $path_findings_image,
+                    'findings_image' => url($new_path_findings),
                 ];
             }
             $data['udpateInspeksi'] = InspeksiPanelBoxNetwork::firstWhere('id', $request->id)->update($dataInspection);
@@ -96,6 +97,7 @@ class InspeksiPanelBoxNetworkController extends Controller
                 //upload image
                 $action_image = $request->file('action_image');
                 $path_action_image = $action_image->store('images', 'public');
+                $new_path_action = 'storage/' . $path_action_image;
 
                 $dataInspection = [
                     'cleanliness' => $request->cleanliness,
@@ -108,7 +110,7 @@ class InspeksiPanelBoxNetworkController extends Controller
                     'inspection_status' => 'sudah_inspeksi',
                     'findings_action' => $request->findings_action,
                     'findings_status' => $request->findings_status,
-                    'action_image' => $path_action_image,
+                    'action_image' => url($new_path_action),
                 ];
                 $data['udpateInspeksi'] = InspeksiPanelBoxNetwork::firstWhere('id', $request->id)->update($dataInspection);
             } else {
