@@ -3,6 +3,7 @@
 use App\Http\Controllers\AduanController;
 use App\Http\Controllers\ComputerLoanController;
 use App\Http\Controllers\GaransionLaptopController;
+use App\Http\Controllers\InspeksiPanelBoxNetworkController;
 use App\Http\Controllers\InvApController;
 use App\Http\Controllers\InvCctvController;
 use App\Http\Controllers\InvChannelRadioController;
@@ -53,6 +54,7 @@ Route::prefix('inventory')->group(function () {
     Route::apiResource('radio', InvRadioController::class);   
     Route::apiResource('channel_radio', InvChannelRadioController::class);   
     Route::apiResource('server', InvServerController::class);   
+    Route::apiResource('panelbox_network', InvPanelBoxController::class);   
 });
 
 Route::prefix('peminjaman')->group(function () {
@@ -76,4 +78,7 @@ Route::prefix('itportal')->group(function () {
     Route::post('kpi_perangkat', [KpiDeviceController::class, 'showKpi'])->name('api.showKpiPerangkat');   
     Route::post('kpi_server', [KpiServerController::class, 'showKpi'])->name('api.showKpiServer');   
     Route::post('kpi_response_time', [KpiResponseTimeController::class, 'showKpi'])->name('api.showKpiResponseTime');   
+    Route::apiResource('inspeksi_panelbox', InspeksiPanelBoxNetworkController::class);
+    Route::post('approval_Inspeksi_panelbox', [InspeksiPanelBoxNetworkController::class, 'approval'])->name('api.approvalInspeksiPanelbox');   
+    Route::post('approval_all_Inspeksi_panelbox', [InspeksiPanelBoxNetworkController::class, 'approvalAll'])->name('api.approvalAllInspeksiPanelbox');   
 });  
