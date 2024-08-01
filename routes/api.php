@@ -3,6 +3,8 @@
 use App\Http\Controllers\AduanController;
 use App\Http\Controllers\ComputerLoanController;
 use App\Http\Controllers\GaransionLaptopController;
+use App\Http\Controllers\InspeksiComputerController;
+use App\Http\Controllers\InspeksiLaptopController;
 use App\Http\Controllers\InspeksiPanelBoxNetworkController;
 use App\Http\Controllers\InvApController;
 use App\Http\Controllers\InvCctvController;
@@ -78,7 +80,19 @@ Route::prefix('itportal')->group(function () {
     Route::post('kpi_perangkat', [KpiDeviceController::class, 'showKpi'])->name('api.showKpiPerangkat');   
     Route::post('kpi_server', [KpiServerController::class, 'showKpi'])->name('api.showKpiServer');   
     Route::post('kpi_response_time', [KpiResponseTimeController::class, 'showKpi'])->name('api.showKpiResponseTime');   
-    Route::apiResource('inspeksi_panelbox', InspeksiPanelBoxNetworkController::class);
-    Route::post('approval_Inspeksi_panelbox', [InspeksiPanelBoxNetworkController::class, 'approval'])->name('api.approvalInspeksiPanelbox');   
-    Route::post('approval_all_Inspeksi_panelbox', [InspeksiPanelBoxNetworkController::class, 'approvalAll'])->name('api.approvalAllInspeksiPanelbox');   
 });  
+
+Route::prefix('itportal/inspeksi')->group(function () { 
+    Route::get('cek_data_computers', [InspeksiComputerController::class, 'cek_data']);
+    
+    Route::apiResource('panelbox', InspeksiPanelBoxNetworkController::class);
+    Route::post('approval_panelbox', [InspeksiPanelBoxNetworkController::class, 'approval'])->name('api.approvalInspeksiPanelbox');   
+    Route::post('approval_all_panelbox', [InspeksiPanelBoxNetworkController::class, 'approvalAll'])->name('api.approvalAllInspeksiPanelbox');   
+    Route::apiResource('computers', InspeksiComputerController::class);
+    Route::post('approval_computers', [InspeksiComputerController::class, 'approval'])->name('api.approvalInspeksiComputers');   
+    Route::post('approval_all_computers', [InspeksiComputerController::class, 'approvalAll'])->name('api.approvalAllInspeksiComputers');
+    
+    Route::apiResource('laptops', InspeksiLaptopController::class);
+    Route::post('approval_laptops', [InspeksiLaptopController::class, 'approval'])->name('api.approvalInspeksiLaptops');   
+    Route::post('approval_all_laptops', [InspeksiLaptopController::class, 'approvalAll'])->name('api.approvalAllInspeksiLaptops');
+}); 
