@@ -23,8 +23,8 @@ class InspeksiLaptopController extends Controller
     }
     public function index()
     {
-        $inspeksi_computer = InspeksiLaptop::all();
-        return response()->json($inspeksi_computer);
+        $inspeksi_laptop = InspeksiLaptop::all();
+        return response()->json($inspeksi_laptop);
     }
 
     public function store(Request $request)
@@ -237,20 +237,20 @@ class InspeksiLaptopController extends Controller
 
     public function show($id)
     {
-        $inspeksi_computer = InspeksiLaptop::find($id);
-        if (is_null($inspeksi_computer)) {
+        $inspeksi_laptop = InspeksiLaptop::find($id);
+        if (is_null($inspeksi_laptop)) {
             return response()->json(['message' => 'Panelbox Data not found'], 404);
         }
-        return response()->json($inspeksi_computer);
+        return response()->json($inspeksi_laptop);
     }
 
     public function destroy($id)
     {
-        $inspeksi_computer = InspeksiLaptop::find($id);
-        if (is_null($inspeksi_computer)) {
+        $inspeksi_laptop = InspeksiLaptop::find($id);
+        if (is_null($inspeksi_laptop)) {
             return response()->json(['message' => 'Panelbox Data not found'], 404);
         }
-        $inspeksi_computer->delete();
+        $inspeksi_laptop->delete();
         return response()->json(['message' => 'Data has deleted'], 204);
     }
 }
