@@ -6,6 +6,7 @@ use App\Http\Controllers\GaransionLaptopController;
 use App\Http\Controllers\InspeksiComputerController;
 use App\Http\Controllers\InspeksiLaptopController;
 use App\Http\Controllers\InspeksiPanelBoxNetworkController;
+use App\Http\Controllers\InspeksiPrinterController;
 use App\Http\Controllers\InvApController;
 use App\Http\Controllers\InvCctvController;
 use App\Http\Controllers\InvChannelRadioController;
@@ -95,4 +96,9 @@ Route::prefix('itportal/inspeksi')->group(function () {
     Route::apiResource('laptops', InspeksiLaptopController::class);
     Route::post('approval_laptops', [InspeksiLaptopController::class, 'approval'])->name('api.approvalInspeksiLaptops');   
     Route::post('approval_all_laptops', [InspeksiLaptopController::class, 'approvalAll'])->name('api.approvalAllInspeksiLaptops');
+
+    Route::apiResource('printers', InspeksiPrinterController::class);
+    Route::post('approval_printers', [InspeksiPrinterController::class, 'approval'])->name('api.approvalInspeksiPrinters');   
+    Route::post('approval_all_printers', [InspeksiPrinterController::class, 'approvalAll'])->name('api.approvalAllInspeksiPrinters');
+
 }); 
