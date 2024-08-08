@@ -201,19 +201,24 @@ class InspeksiLaptopController extends Controller
 
     public function approval(Request $request)
     {
-        if ($request->approvalType == 'accept') {
-            $dataApproval = [
-                'approved_by' => 'Dafa Bintang Athaillah',
-                'status_approval' => 'approve',
-            ];
-        } else {
-            $dataApproval = [
-                'approved_by' => 'Dafa Bintang Athaillah',
-                'status_approval' => 'reject',
-            ];
+        $dataCheckStatusInspeksi = InspeksiLaptop::where('id', $request->id)->value('inspection_status');
+        if ($dataCheckStatusInspeksi == 'sudah_inspeksi') {
+            if ($request->approvalType == 'accept') {
+                $dataApproval = [
+                    'approved_by' => 'Dafa Bintang Athaillah',
+                    'status_approval' => 'approve',
+                ];
+            } else {
+                $dataApproval = [
+                    'approved_by' => 'Dafa Bintang Athaillah',
+                    'status_approval' => 'reject',
+                ];
+            }
+            $data['udpateInspeksiApproval'] = InspeksiLaptop::where('id', $request->id)->update($dataApproval);
+            return response()->json($data);
+        }else{
+            return response()->json(['message' => 'data ini belum di inspeksi']);
         }
-        $data['udpateInspeksiApproval'] = InspeksiLaptop::where('id', $request->id)->update($dataApproval);
-        return response()->json($data);
     }
 
     public function approvalAll(Request $request)
