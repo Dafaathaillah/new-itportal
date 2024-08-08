@@ -219,7 +219,7 @@ class InspeksiPrinterController extends Controller
                 'status_approval' => 'reject',
             ];
         }
-        $data['udpateInspeksiApprovalAll'] = InspeksiPrinter::where('year', $yearNow)->update($dataApproval);
+        $data['udpateInspeksiApprovalAll'] = InspeksiPrinter::where('year', $yearNow)->where('inspection_status', 'sudah_inspeksi')->update($dataApproval);
         return response()->json(['message' => 'Approve all updated successfully']);
     }
 
