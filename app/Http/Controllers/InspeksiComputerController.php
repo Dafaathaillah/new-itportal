@@ -223,7 +223,7 @@ class InspeksiComputerController extends Controller
                 'status_approval' => 'reject',
             ];
         }
-        $data['inventories'] = InspeksiComputer::whereBetween('created_date', [$data['quarterStart'], $data['quarterEnd']])->update($dataApproveal);
+        $data['inventories'] = InspeksiComputer::where('inspection_status', 'sudah_inspeksi')->whereBetween('created_date', [$data['quarterStart'], $data['quarterEnd']])->update($dataApproveal);
         return response()->json(['message' => 'Approve all updated successfully']);
     }
 
