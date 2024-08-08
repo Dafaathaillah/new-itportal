@@ -12,8 +12,11 @@ Artisan::command('inspire', function () {
 
 // Schedule::command('inspeksiComputer:cron')->everyMinute(); //  * * * * * php /path-to-your-project/artisan schedule:run >> /dev/null 2>&1 //
 // Schedule::command('inspeksiLaptop:cron')->everyMinute(); // * * * * * php /path/to/your/project/artisan schedule:run >> /dev/null 2>&1 //
-Schedule::command('inspeksiPrinter:cron')->everyMinute(); // * * * * * php /path/to/your/project/artisan schedule:run >> /dev/null 2>&1 //
+Schedule::command('inspeksiSwitch:cron')->everyMinute(); // * * * * * php /path/to/your/project/artisan schedule:run >> /dev/null 2>&1 //
 
 Schedule::command('inspeksiComputer:cron')->quarterly(); //  * * * * * php /path-to-your-project/artisan schedule:run >> /dev/null 2>&1 //
 Schedule::command('inspeksiLaptop:cron')->yearly(); // * * * * * php /path/to/your/project/artisan schedule:run >> /dev/null 2>&1 //
-// Schedule::command('inspeksiPrinter:cron')->monthly(); // * * * * * php /path/to/your/project/artisan schedule:run >> /dev/null 2>&1 //
+Schedule::command('inspeksiPrinter:cron')->monthly(); // * * * * * php /path/to/your/project/artisan schedule:run >> /dev/null 2>&1 //
+Schedule::command('inspeksiAp:cron')->monthly(); // * * * * * php /path/to/your/project/artisan schedule:run >> /dev/null 2>&1 //
+Schedule::command('inspeksiWirelless:cron')->monthly(); // * * * * * php /path/to/your/project/artisan schedule:run >> /dev/null 2>&1 //
+Schedule::command('inspeksiSwitch:cron')->monthly(); // * * * * * php /path/to/your/project/artisan schedule:run >> /dev/null 2>&1 //
