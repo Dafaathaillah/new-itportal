@@ -173,6 +173,7 @@ class InspeksiPanelBoxNetworkController extends Controller
         }
         InspeksiPanelBoxNetwork::where('month', $month)
             ->where('year', $year)
+            ->where('inspection_status', 'sudah_inspeksi')
             ->update($dataApproveal);
         return response()->json(['message' => 'Approve all updated successfully']);
     }
