@@ -41,7 +41,6 @@ return new class extends Migration
             $table->string('approved_by', 255)->nullable();
             $table->string('status_approval', 255)->nullable();
 
-
             $table->timestamps();
         });
     }
