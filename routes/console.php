@@ -10,9 +10,8 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
 
-// Schedule::command('inspeksiComputer:cron')->everyMinute(); //  * * * * * php /path-to-your-project/artisan schedule:run >> /dev/null 2>&1 //
-// Schedule::command('inspeksiLaptop:cron')->everyMinute(); // * * * * * php /path/to/your/project/artisan schedule:run >> /dev/null 2>&1 //
 Schedule::command('inspeksiSwitch:cron')->everyMinute(); // * * * * * php /path/to/your/project/artisan schedule:run >> /dev/null 2>&1 //
+Schedule::command('inspeksiMobileTower:cron')->everyMinute(); // * * * * * php /path/to/your/project/artisan schedule:run >> /dev/null 2>&1 //
 
 Schedule::command('inspeksiComputer:cron')->quarterly(); //  * * * * * php /path-to-your-project/artisan schedule:run >> /dev/null 2>&1 //
 Schedule::command('inspeksiLaptop:cron')->yearly(); // * * * * * php /path/to/your/project/artisan schedule:run >> /dev/null 2>&1 //
