@@ -18,6 +18,8 @@ class InspeksiMobileTowerController extends Controller
     public function store(Request $request)
     {
         // Gabungkan inputan menjadi satu string
+        $crew = implode(', ', $request->crew);
+
         $physic_condition_mobile_tower = implode(', ', [
             $request['kondisi_skidding_dalam_keadaan_baik'],
             $request['kondisi_engsel_solpan_dalam_keadaan_baik'],
@@ -155,6 +157,7 @@ class InspeksiMobileTowerController extends Controller
                     'action_image' => $imagePathsActionString,
                     'remarks' => $request->remarks,
                     'due_date' => $request->due_date,
+                    'crew' => $crew,
                     'list_of_needs' => $request->list_of_needs,
                     'pica_number' => $uniqueString,
                     'created_date' => Carbon::now()->format('Y-m-d'),
@@ -196,6 +199,7 @@ class InspeksiMobileTowerController extends Controller
                     'findings_image' => $imagePathsFindingString,
                     'remarks' => $request->remarks,
                     'due_date' => $request->due_date,
+                    'crew' => $crew,
                     'list_of_needs' => $request->list_of_needs,
                     'pica_number' => $uniqueString,
                     'created_date' => Carbon::now()->format('Y-m-d'),
@@ -238,6 +242,7 @@ class InspeksiMobileTowerController extends Controller
                     'action_image' => $imagePathsActionString,
                     'remarks' => $request->remarks,
                     'due_date' => $request->due_date,
+                    'crew' => $crew,
                     'list_of_needs' => $request->list_of_needs,
                     'pica_number' => $uniqueString,
                     'created_date' => Carbon::now()->format('Y-m-d'),
@@ -342,7 +347,7 @@ class InspeksiMobileTowerController extends Controller
     {
         $inspeksiMobileTower = InspeksiMobileTower::find($id);
         if (is_null($inspeksiMobileTower)) {
-            return response()->json(['message' => 'Panelbox Data not found'], 404);
+            return response()->json(['message' => 'Data not found'], 404);
         }
         return response()->json($inspeksiMobileTower);
     }
@@ -351,7 +356,7 @@ class InspeksiMobileTowerController extends Controller
     {
         $inspeksiMobileTower = InspeksiMobileTower::find($id);
         if (is_null($inspeksiMobileTower)) {
-            return response()->json(['message' => 'Panelbox Data not found'], 404);
+            return response()->json(['message' => 'Data not found'], 404);
         }
         $inspeksiMobileTower->delete();
         return response()->json(['message' => 'Data has deleted'], 204);

@@ -33,6 +33,7 @@ class InspeksiMobileTower extends Model
         'findings_status',
         'remarks',
         'due_date',
+        'crew',
         'approved_by',
         'status_approval',
     ];
