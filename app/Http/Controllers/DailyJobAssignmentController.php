@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DailyJobAssignment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DailyJobAssignmentController extends Controller
@@ -73,7 +74,8 @@ class DailyJobAssignmentController extends Controller
 
     public function showDataTechnicianPage(Request $request)
     {
-        $results = DailyJobAssignment::where('crew_partner', 'LIKE', "%dafa%")->where('status', '!=', 'CLOSED')->get();
+        $name = Auth::user()->name;
+        $results = DailyJobAssignment::where('crew_partner', 'LIKE', "%{$name}%")->where('status', '!=', 'CLOSED')->get();
         return response()->json($results);
     }
 

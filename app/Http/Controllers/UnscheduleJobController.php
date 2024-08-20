@@ -6,6 +6,7 @@ use App\Models\PerangkatBreakdown;
 use App\Models\UnscheduleJob;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UnscheduleJobController extends Controller
@@ -75,7 +76,7 @@ class UnscheduleJobController extends Controller
                 $validatedDataPerangkatBreakdown['month'] = $month;
                 $validatedDataPerangkatBreakdown['created_date'] = $date;
                 $validatedDataPerangkatBreakdown['year'] = $year;
-                $validatedDataPerangkatBreakdown['pic'] = 'DAFA BINTANG ATHAILLAH';
+                $validatedDataPerangkatBreakdown['pic'] = Auth::user()->name;
                 $data_unschedule_create = $request->all();
     
                 $perangkatBreakdown = PerangkatBreakdown::create($validatedDataPerangkatBreakdown);
@@ -100,7 +101,7 @@ class UnscheduleJobController extends Controller
                 $validatedDataPerangkatBreakdown['month'] = $month;
                 $validatedDataPerangkatBreakdown['created_date'] = $date;
                 $validatedDataPerangkatBreakdown['year'] = $year;
-                $validatedDataPerangkatBreakdown['pic'] = 'DAFA BINTANG ATHAILLAH';
+                $validatedDataPerangkatBreakdown['pic'] = Auth::user()->name;
 
                 $perangkatBreakdown = PerangkatBreakdown::firstWhere('inventory_number', $request->inventory_number)->update($validatedDataPerangkatBreakdown);
                 $unscheduleJob = UnscheduleJob::firstWhere('id', $request->id)->update($request->all());

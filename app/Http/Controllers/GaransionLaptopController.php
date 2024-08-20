@@ -7,6 +7,7 @@ use App\Models\InvLaptop;
 use App\Models\PerangkatBreakdown;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class GaransionLaptopController extends Controller
@@ -59,7 +60,7 @@ class GaransionLaptopController extends Controller
                 $validatedDataPerangkatBreakdown['root_cause'] = 'GARANSI';
                 $validatedDataPerangkatBreakdown['garansion_laptop_code'] = $uniqueString;
                 $validatedDataPerangkatBreakdown['location'] = $data_inv_laptop->location;
-                $validatedDataPerangkatBreakdown['pic'] = 'DAFA BINTANG ATHAILLAH';
+                $validatedDataPerangkatBreakdown['pic'] = Auth::user()->name;
                 $validatedDataPerangkatBreakdown['created_date'] = Carbon::now();
                 $validatedDataPerangkatBreakdown['month'] = $month;
                 $validatedDataPerangkatBreakdown['year'] = $year;
@@ -103,7 +104,7 @@ class GaransionLaptopController extends Controller
                 }
                 // $validatedDataPerangkatBreakdown['garansion_laptop_code'] = $uniqueString;
                 $validatedDataPerangkatBreakdown['location'] = $data_inv_laptop->location;
-                $validatedDataPerangkatBreakdown['pic'] = 'DAFA BINTANG ATHAILLAH';
+                $validatedDataPerangkatBreakdown['pic'] = Auth::user()->name;
                 $validatedDataPerangkatBreakdown['month'] = $month;
                 $validatedDataPerangkatBreakdown['year'] = $year;
 

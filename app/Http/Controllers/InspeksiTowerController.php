@@ -6,6 +6,7 @@ use App\Models\InspeksiTower;
 use App\Models\InvTower;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InspeksiTowerController extends Controller
 {
@@ -260,12 +261,12 @@ class InspeksiTowerController extends Controller
         if ($dataCheckStatusInspeksi == 'sudah_inspeksi') {
             if ($request->approvalType == 'accept') {
                 $dataApproval = [
-                    'approved_by' => 'Dafa Bintang Athaillah',
+                    'approved_by' => Auth::user()->name,
                     'status_approval' => 'approve',
                 ];
             } else {
                 $dataApproval = [
-                    'approved_by' => 'Dafa Bintang Athaillah',
+                    'approved_by' => Auth::user()->name,
                     'status_approval' => 'reject',
                 ];
             }
@@ -282,12 +283,12 @@ class InspeksiTowerController extends Controller
 
         if ($request->approvalType == 'accept') {
             $dataApproval = [
-                'approved_by' => 'Dafa Bintang Athaillah',
+                'approved_by' => Auth::user()->name,
                 'status_approval' => 'approve',
             ];
         } else {
             $dataApproval = [
-                'approved_by' => 'Dafa Bintang Athaillah',
+                'approved_by' => Auth::user()->name,
                 'status_approval' => 'reject',
             ];
         }

@@ -33,7 +33,7 @@ return new class extends Migration
             $table->string('remarks', 255)->nullable();
             $table->string('cable_arrangement', 255)->nullable();
             $table->string('inspection_by', 255)->nullable();
-            $table->dateTime('inspection_at', 255)->nullable();
+            $table->dateTime('inspection_at')->nullable();
             $table->string('approvred_by', 255)->nullable();
             $table->string('status_approval', 255)->nullable();
 

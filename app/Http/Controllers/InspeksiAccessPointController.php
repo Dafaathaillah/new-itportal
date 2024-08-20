@@ -6,6 +6,7 @@ use App\Models\InspeksiAccessPoint;
 use App\Models\InvAp;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InspeksiAccessPointController extends Controller
 {
@@ -226,12 +227,12 @@ class InspeksiAccessPointController extends Controller
         if ($dataCheckStatusInspeksi == 'sudah_inspeksi') {
             if ($request->approvalType == 'accept') {
                 $dataApproveal = [
-                    'approved_by' => 'Dafa Bintang Athaillah',
+                    'approved_by' => Auth::user()->name,
                     'status_approval' => 'approve',
                 ];
             } else {
                 $dataApproveal = [
-                    'approved_by' => 'Dafa Bintang Athaillah',
+                    'approved_by' => Auth::user()->name,
                     'status_approval' => 'reject',
                 ];
             }
@@ -248,12 +249,12 @@ class InspeksiAccessPointController extends Controller
         $year =Carbon::now()->format('Y');
         if ($request->approvalType == 'accept') {
             $dataApproveal = [
-                'approved_by' => 'Dafa Bintang Athaillah',
+                'approved_by' => Auth::user()->name,
                 'status_approval' => 'approve',
             ];
         } else {
             $dataApproveal = [
-                'approved_by' => 'Dafa Bintang Athaillah',
+                'approved_by' => Auth::user()->name,
                 'status_approval' => 'reject',
             ];
         }

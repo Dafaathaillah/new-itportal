@@ -6,6 +6,7 @@ use App\Models\InspeksiComputer;
 use App\Models\InvComputer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InspeksiComputerController extends Controller
 {
@@ -192,12 +193,12 @@ class InspeksiComputerController extends Controller
         if ($dataCheckStatusInspeksi == 'sudah_inspeksi') {
             if ($request->approvalType == 'accept') {
                 $dataApproveal = [
-                    'approved_by' => 'Dafa Bintang Athaillah',
+                    'approved_by' => Auth::user()->name,
                     'status_approval' => 'approve',
                 ];
             } else {
                 $dataApproveal = [
-                    'approved_by' => 'Dafa Bintang Athaillah',
+                    'approved_by' => Auth::user()->name,
                     'status_approval' => 'reject',
                 ];
             }
@@ -219,12 +220,12 @@ class InspeksiComputerController extends Controller
            
            if ($request->approvalType == 'accept') {
                $dataApproveal = [
-                'approved_by' => 'Dafa Bintang Athaillah',
+                'approved_by' => Auth::user()->name,
                 'status_approval' => 'approve',
             ];
         } else {
             $dataApproveal = [
-                'approved_by' => 'Dafa Bintang Athaillah',
+                'approved_by' => Auth::user()->name,
                 'status_approval' => 'reject',
             ];
         }

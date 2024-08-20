@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PerangkatBreakdown;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ServerBreakdownController extends Controller
@@ -32,7 +33,7 @@ class ServerBreakdownController extends Controller
             'root_cause_category' => $request->root_cause_category,
             'root_cause' => $request->root_cause,
             'status' => $request->status,
-            'pic' => 'DAFA BINTANG ATHAILLAH',
+            'pic' => Auth::user()->name,
             // 'created_by' => 'USER LOGIN',
         ];
         $date = Carbon::now();

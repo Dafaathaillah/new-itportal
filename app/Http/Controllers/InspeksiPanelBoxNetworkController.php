@@ -6,6 +6,7 @@ use App\Models\InspeksiPanelBoxNetwork;
 use App\Models\InvPanelBox;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InspeksiPanelBoxNetworkController extends Controller
 {
@@ -57,7 +58,7 @@ class InspeksiPanelBoxNetworkController extends Controller
                     'cable_arrangement' => $request->cable_arrangement,
                     'remarks' => $request->remarks,
                     'created_date' => Carbon::now()->format('Y-m-d'),
-                    'inspection_by' => 'Dafa Bintang Athaillah',
+                    'inspection_by' => Auth::user()->name,
                     'inspection_at' => Carbon::now(),
                     'inspection_status' => 'sudah_inspeksi',
                     'findings' => $request->findings,
@@ -81,7 +82,7 @@ class InspeksiPanelBoxNetworkController extends Controller
                     'remarks' => $request->remarks,
                     'cable_arrangement' => $request->cable_arrangement,
                     'created_date' => Carbon::now()->format('Y-m-d'),
-                    'inspection_by' => 'Dafa Bintang Athaillah',
+                    'inspection_by' => Auth::user()->name,
                     'inspection_at' => Carbon::now(),
                     'inspection_status' => 'sudah_inspeksi',
                     'findings' => $request->findings,
@@ -105,7 +106,7 @@ class InspeksiPanelBoxNetworkController extends Controller
                     'remarks' => $request->remarks,
                     'cable_arrangement' => $request->cable_arrangement,
                     'created_date' => Carbon::now()->format('Y-m-d'),
-                    'inspection_by' => 'Dafa Bintang Athaillah',
+                    'inspection_by' => Auth::user()->name,
                     'inspection_at' => Carbon::now(),
                     'inspection_status' => 'sudah_inspeksi',
                     'findings_action' => $request->findings_action,
@@ -120,7 +121,7 @@ class InspeksiPanelBoxNetworkController extends Controller
                     'remarks' => $request->remarks,
                     'cable_arrangement' => $request->cable_arrangement,
                     'created_date' => Carbon::now()->format('Y-m-d'),
-                    'inspection_by' => 'Dafa Bintang Athaillah',
+                    'inspection_by' => Auth::user()->name,
                     'inspection_at' => Carbon::now(),
                     'inspection_status' => 'sudah_inspeksi',
                 ];
@@ -145,12 +146,12 @@ class InspeksiPanelBoxNetworkController extends Controller
         if ($dataCheckStatusInspeksi == 'sudah_inspeksi') {
             if ($request->approvalType == 'accept') {
                 $dataApproveal = [
-                    'approved_by' => 'Dafa Bintang Athaillah',
+                    'approved_by' => Auth::user()->name,
                     'status_approval' => 'approve',
                 ];
             } else {
                 $dataApproveal = [
-                    'approved_by' => 'Dafa Bintang Athaillah',
+                    'approved_by' => Auth::user()->name,
                     'status_approval' => 'reject',
                 ];
             }
@@ -167,12 +168,12 @@ class InspeksiPanelBoxNetworkController extends Controller
         $year = $request->year;
         if ($request->approvalType == 'accept') {
             $dataApproveal = [
-                'approved_by' => 'Dafa Bintang Athaillah',
+                'approved_by' => Auth::user()->name,
                 'status_approval' => 'approve',
             ];
         } else {
             $dataApproveal = [
-                'approved_by' => 'Dafa Bintang Athaillah',
+                'approved_by' => Auth::user()->name,
                 'status_approval' => 'reject',
             ];
         }
