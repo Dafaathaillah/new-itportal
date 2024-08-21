@@ -48,12 +48,4 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-    protected function type(): Attribute
-    {
-        return new Attribute(
-            get: fn ($value) =>  ["ict_technician", "ict_admin", "ict_group_leader", "ict_developer"][$value],
-        );
-    }
-
 }
