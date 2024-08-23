@@ -31,6 +31,24 @@ class AuthController extends Controller
         return response()->json(['message' => 'User registered successfully'], 201);
     }
 
+    public function change_password(Request $request)
+    {
+        $data = [
+            'nrp' => $request->nrp,
+            'password' => $request->new_password,
+        ];
+        // return response()->json($data);
+
+        $user = User::where('nrp', $request->nrp)->first();
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json(['message', 'The provided credentials are incorrect.']);
+        } else {
+            $update_password = User::firstWhere('nrp', $request->nrp)->update($data);
+            return response()->json($update_password, 201);
+        }
+
+    }
+
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();

@@ -19,18 +19,24 @@ class IctAdminController extends Controller
         $userGet = User::where('nrp', $request->nrp)->where('password', $request->password)->first();
 
         if (empty($user)) {
+            return response()->json(['message', 'user not defined your role is: ' . $userGet->role . ', please change youre login page']);
+            // return redirect()->route('login')
+            // ->with('message', 'user not defined your role is: ' . $userGet->role);
+        } else {
             if (!$user || !Hash::check($request->password, $user->password)) {
-                return response()->json(['message', 'The provided credentials are incorrect.']);
-            }else{
+                return response()->json(['message', 'The provided credentials are incorrect']);
+            } else {
                 // return redirect()->route('login')
                 // ->with('message', 'user not defined your role is: ' . $userGet->role);
-                return response()->json(['message', 'user not defined your role is: ' . $userGet->role . ', please change youre login page']);
+                if (empty($user)) {
+                    return response()->json(['message', 'user not defined your role is: ' . $userGet->role . ', please change youre login page']);
+                } else {
+                    return response()->json([
+                        'user' => $user,
+                        'token' => $user->createToken('mobile', ['role:ict_admin'])->plainTextToken
+                    ]);
+                }
             }
         }
-
-        return response()->json([
-            'user' => $user,
-            'token' => $user->createToken('mobile', ['role:ict_admin'])->plainTextToken
-        ]);
     }
 }
