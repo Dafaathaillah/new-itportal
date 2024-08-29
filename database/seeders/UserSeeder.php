@@ -143,8 +143,8 @@ class UserSeeder extends Seeder
         DB::table('users')->insert(
             [
                 'name' => 'MUHAMMAD BAGAS NOFIANOR',
-                'nrp' => '42221149',
-                'password' => Hash::make('42221149'),
+                'nrp' => '24003981',
+                'password' => Hash::make('24003981'),
                 'position' => 'ICT TECHNICIAN',
                 'role' => 'ict_technician',
             ],
