@@ -12,7 +12,7 @@ class UnscheduleJob extends Model
     protected $fillable = [
         'assignment_id',
         'activity_code',
-        'job_category',
+        'category_report',
         'category',
         'start_progress',
         'end_progress',

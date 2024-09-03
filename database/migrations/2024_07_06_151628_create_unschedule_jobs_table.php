@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('assignment_id', 255)->nullable();
             $table->string('activity_code', 255)->nullable();
-            $table->string('job_category', 255)->nullable();
+            $table->string('category_report', 255)->nullable();
             $table->string('category', 255)->nullable();
             $table->dateTime('start_progress')->nullable();
             $table->dateTime('end_progress')->nullable();
