@@ -10,6 +10,7 @@ class DailyJobAssignment extends Model
     use HasFactory;
     protected $fillable = [
         'assignment_code',
+        'job_assignment',
         'remark',
         'job',
         'sarana',

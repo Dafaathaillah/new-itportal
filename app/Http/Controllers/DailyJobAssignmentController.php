@@ -36,6 +36,7 @@ class DailyJobAssignmentController extends Controller
         $crew_part = implode(', ', $request->crew);
         $data = [
             'assignment_code' => $uniqueString,
+            'job_assignment' => $request->job_assignment,
             'remark' => $request->remark,
             'job' => $request->job,
             'crew_partner' => $crew_part,
@@ -85,7 +86,7 @@ class DailyJobAssignmentController extends Controller
 
         if (!empty($request->remark)) {
             $remark_technician = ', from technician: ' . $request->remark . ', ';
-        }else{
+        } else {
             $remark_technician = $request->remark;
         }
 
@@ -96,9 +97,27 @@ class DailyJobAssignmentController extends Controller
             'remark' => $getData->remark . $remark_technician,
         ];
 
-        DailyJobAssignment::where('id', $request->id)->update($data);
+        if ($request->status = 'CLOSED') {
+            $data_unschedule = [
+                'assignment_id' => $request->id,
+                'category_report' => 'Assignment',
+                'start_progress' => $request->start_progress,
+                'end_progress' => $request->end_progress,
+                'issue' => $request->job_assignment,
+                'category' => $request->category,
+                'root_cause' => $request->root_cause,
+                'action' => $request->action,
+                'crew' => $crew_part,
+                'remark' => $request->remark,
+                'status' => $request->status,
+            ];
 
-        return response()->json(['message' => 'Success Update Data']);
+            $dataStore['store_unschedule'] = DB::table('unschedule_jobs')->insert($data_unschedule);
+        }
+
+        $dataStore['closing_job_assignment'] = DailyJobAssignment::where('id', $request->id)->update($data);
+
+        return response()->json($dataStore);
     }
 
     public function showData()

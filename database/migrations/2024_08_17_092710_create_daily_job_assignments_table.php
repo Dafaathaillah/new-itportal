@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('daily_job_assignments', function (Blueprint $table) {
             $table->id();
             $table->string('assignment_code', 255)->nullable();
+            $table->string('job_assignment', 255)->nullable();
             $table->string('remark', 255)->nullable();
             $table->string('remark_technician', 255)->nullable();
             $table->string('job', 255)->nullable();
