@@ -145,10 +145,10 @@ class UnscheduleJobController extends Controller
     // get data per user login/auth
     public function getDataUserLogin()
     {
-        $request = 'MUHAMMAD MUDJAKIR';
-        // $searchTerm = $request->query('crew');
+        // $request = 'MUHAMMAD MUDJAKIR';
+        $searchTerm = Auth::user()->name;
 
-        $users = UnscheduleJob::where('crew', 'like', '%' . $request . '%')->get();
+        $users = UnscheduleJob::where('crew', 'like', '%' . $searchTerm . '%')->get();
 
         return response()->json($users);
     }
