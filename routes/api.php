@@ -39,6 +39,7 @@ use App\Http\Controllers\KomputerController;
 use App\Http\Controllers\KpiDeviceController;
 use App\Http\Controllers\KpiResponseTimeController;
 use App\Http\Controllers\KpiServerController;
+use App\Http\Controllers\KpiVhmsController;
 use App\Http\Controllers\LaptopLoanController;
 use App\Http\Controllers\ServerBreakdownController;
 use App\Http\Controllers\UnscheduleJobController;
@@ -173,6 +174,13 @@ if (Route::middleware(['auth:sanctum', 'type.ict_developer'])) {
 
         Route::prefix('itportal/dispatch')->group(function () {
             Route::apiResource('/vhms', DispatchVhmsController::class);
+            Route::apiResource('/kpi-vhms-breakdown-unit', KpiVhmsController::class);
+            Route::post('/show-data-kpi', [KpiVhmsController::class, 'showDataKpi']);
+            Route::post('/show-data-kpi-sorting', [KpiVhmsController::class, 'showDataSortingUnitBreakdown']);
+            Route::post('/update-perangkat-breakdown', [DispatchVhmsController::class, 'updateBreakdownVhms']);
+            Route::post('/update-do-repair-vhms', [DispatchVhmsController::class, 'doRepairVhms']);
+            Route::get('/get-data-history-repair-vhms/{unit:id}', [DispatchVhmsController::class, 'showDataRepiarHistory'])->name('getDataHistoryVhms');
+
         });
     });
 } elseif (Route::middleware(['auth:sanctum', 'type.ict_admin'])) {
