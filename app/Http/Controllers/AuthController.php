@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    public function index(){
+        // return inertia('index/index');
+        return response()->json(['message' => 'masih masuk api login'], 401);
+    }
+    
     public function register(Request $request)
     {
         $request->validate([

@@ -41,21 +41,17 @@ use App\Http\Controllers\KpiResponseTimeController;
 use App\Http\Controllers\KpiServerController;
 use App\Http\Controllers\KpiVhmsController;
 use App\Http\Controllers\LaptopLoanController;
+use App\Http\Controllers\RadioCommunicationController;
 use App\Http\Controllers\ServerBreakdownController;
 use App\Http\Controllers\UnscheduleJobController;
 use App\Http\Controllers\UserAllController;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+use Illuminate\Foundation\Application;
 
-Route::get('/', function (Request $request) {
-    $inventoriesMobileTower = InvMobileTower::get();
-    // Insert data into inspeksi
-    foreach ($inventoriesMobileTower as $inventoryMobileTower) {
-        return response()->json($inventoryMobileTower->id);
-    }
-    return response()->json(['success' => 'success import data'], 200);
-});
 
 // Route::apiResource('users_all', UserAllController::class);
 
@@ -116,6 +112,7 @@ if (Route::middleware(['auth:sanctum', 'type.ict_developer'])) {
             Route::post('/aduan_update_closing', [AduanController::class, 'update_aduan'])->name('api.updateAduan');
             Route::apiResource('/unschedule_job', UnscheduleJobController::class);
             Route::apiResource('/job_assignment', DailyJobAssignmentController::class);
+            Route::apiResource('/radio_job', RadioCommunicationController::class);
             Route::get('/get_data_daily_job_assignment', [DailyJobAssignmentController::class, 'showDataGlPage'])->name('getDataGlPage');
             Route::get('/get_data_daily_job_assignment_technician', [DailyJobAssignmentController::class, 'showDataTechnicianPage'])->name('getDataTechnicianPage');
             Route::post('/sorting_date', [DailyJobAssignmentController::class, 'showDataGlPageSortingDate'])->name('api.sortingDate');
@@ -160,12 +157,12 @@ if (Route::middleware(['auth:sanctum', 'type.ict_developer'])) {
             Route::get('/ping_switch', [InspeksiSwitchController::class, 'ping']);
             Route::post('/ping_switch_single', [InspeksiSwitchController::class, 'singlePing']);
             Route::post('/update_inspeksi_switch', [InspeksiSwitchController::class, 'update']);
-            Route::post('/approval_switch', [InspeksiSwitchControllers::class, 'approval']);
-            Route::post('/approval_all_switch', [InspeksiSwitchControllers::class, 'approvalAll']);
+            Route::post('/approval_switch', [InspeksiSwitchController::class, 'approval']);
+            Route::post('/approval_all_switch', [InspeksiSwitchController::class, 'approvalAll']);
 
             Route::apiResource('/mobile_towers', InspeksiMobileTowerController::class);
-            Route::post('/approval_mobile_towers', [InspeksiSwitchControllers::class, 'approval']);
-            Route::post('/approval_all_mobile_towers', [InspeksiSwitchControllers::class, 'approvalAll']);
+            Route::post('/approval_mobile_towers', [InspeksiSwitchController::class, 'approval']);
+            Route::post('/approval_all_mobile_towers', [InspeksiSwitchController::class, 'approvalAll']);
 
             Route::apiResource('/towers', InspeksiTowerController::class);
             Route::post('/approval_towers', [InspeksiTowerController::class, 'approval']);
@@ -270,12 +267,12 @@ if (Route::middleware(['auth:sanctum', 'type.ict_developer'])) {
             Route::get('/ping_switch', [InspeksiSwitchController::class, 'ping']);
             Route::post('/ping_switch_single', [InspeksiSwitchController::class, 'singlePing']);
             Route::post('/update_inspeksi_switch', [InspeksiSwitchController::class, 'update']);
-            Route::post('/approval_switch', [InspeksiSwitchControllers::class, 'approval']);
-            Route::post('/approval_all_switch', [InspeksiSwitchControllers::class, 'approvalAll']);
+            Route::post('/approval_switch', [InspeksiSwitchController::class, 'approval']);
+            Route::post('/approval_all_switch', [InspeksiSwitchController::class, 'approvalAll']);
 
             Route::apiResource('/mobile_towers', InspeksiMobileTowerController::class);
-            Route::post('/approval_mobile_towers', [InspeksiSwitchControllers::class, 'approval']);
-            Route::post('/approval_all_mobile_towers', [InspeksiSwitchControllers::class, 'approvalAll']);
+            Route::post('/approval_mobile_towers', [InspeksiSwitchController::class, 'approval']);
+            Route::post('/approval_all_mobile_towers', [InspeksiSwitchController::class, 'approvalAll']);
 
             Route::apiResource('/towers', InspeksiTowerController::class);
             Route::post('/approval_towers', [InspeksiTowerController::class, 'approval']);
@@ -369,12 +366,12 @@ if (Route::middleware(['auth:sanctum', 'type.ict_developer'])) {
             Route::get('/ping_switch', [InspeksiSwitchController::class, 'ping']);
             Route::post('/ping_switch_single', [InspeksiSwitchController::class, 'singlePing']);
             Route::post('/update_inspeksi_switch', [InspeksiSwitchController::class, 'update']);
-            Route::post('/approval_switch', [InspeksiSwitchControllers::class, 'approval']);
-            Route::post('/approval_all_switch', [InspeksiSwitchControllers::class, 'approvalAll']);
+            Route::post('/approval_switch', [InspeksiSwitchController::class, 'approval']);
+            Route::post('/approval_all_switch', [InspeksiSwitchController::class, 'approvalAll']);
 
             Route::apiResource('/mobile_towers', InspeksiMobileTowerController::class);
-            Route::post('/approval_mobile_towers', [InspeksiSwitchControllers::class, 'approval']);
-            Route::post('/approval_all_mobile_towers', [InspeksiSwitchControllers::class, 'approvalAll']);
+            Route::post('/approval_mobile_towers', [InspeksiSwitchController::class, 'approval']);
+            Route::post('/approval_all_mobile_towers', [InspeksiSwitchController::class, 'approvalAll']);
 
             Route::apiResource('/towers', InspeksiTowerController::class);
             Route::post('/approval_towers', [InspeksiTowerController::class, 'approval']);
@@ -468,19 +465,19 @@ if (Route::middleware(['auth:sanctum', 'type.ict_developer'])) {
             Route::get('/ping_switch', [InspeksiSwitchController::class, 'ping']);
             Route::post('/ping_switch_single', [InspeksiSwitchController::class, 'singlePing']);
             Route::post('/update_inspeksi_switch', [InspeksiSwitchController::class, 'update']);
-            Route::post('/approval_switch', [InspeksiSwitchControllers::class, 'approval']);
-            Route::post('/approval_all_switch', [InspeksiSwitchControllers::class, 'approvalAll']);
+            Route::post('/approval_switch', [InspeksiSwitchController::class, 'approval']);
+            Route::post('/approval_all_switch', [InspeksiSwitchController::class, 'approvalAll']);
 
             Route::apiResource('/mobile_towers', InspeksiMobileTowerController::class);
-            Route::post('/approval_mobile_towers', [InspeksiSwitchControllers::class, 'approval']);
-            Route::post('/approval_all_mobile_towers', [InspeksiSwitchControllers::class, 'approvalAll']);
+            Route::post('/approval_mobile_towers', [InspeksiSwitchController::class, 'approval']);
+            Route::post('/approval_all_mobile_towers', [InspeksiSwitchController::class, 'approvalAll']);
 
             Route::apiResource('/towers', InspeksiTowerController::class);
             Route::post('/approval_towers', [InspeksiTowerController::class, 'approval']);
             Route::post('/approval_all_towers', [InspeksiTowerController::class, 'approvalAll']);
         });
     });
-} else {
+} elseif (Route::middleware(['auth:sanctum', 'type.ict_section_head'])) {
     Route::middleware(['auth:sanctum', 'type.ict_section_head'])->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
 
@@ -567,12 +564,12 @@ if (Route::middleware(['auth:sanctum', 'type.ict_developer'])) {
             Route::get('/ping_switch', [InspeksiSwitchController::class, 'ping']);
             Route::post('/ping_switch_single', [InspeksiSwitchController::class, 'singlePing']);
             Route::post('/update_inspeksi_switch', [InspeksiSwitchController::class, 'update']);
-            Route::post('/approval_switch', [InspeksiSwitchControllers::class, 'approval']);
-            Route::post('/approval_all_switch', [InspeksiSwitchControllers::class, 'approvalAll']);
+            Route::post('/approval_switch', [InspeksiSwitchController::class, 'approval']);
+            Route::post('/approval_all_switch', [InspeksiSwitchController::class, 'approvalAll']);
 
             Route::apiResource('/mobile_towers', InspeksiMobileTowerController::class);
-            Route::post('/approval_mobile_towers', [InspeksiSwitchControllers::class, 'approval']);
-            Route::post('/approval_all_mobile_towers', [InspeksiSwitchControllers::class, 'approvalAll']);
+            Route::post('/approval_mobile_towers', [InspeksiSwitchController::class, 'approval']);
+            Route::post('/approval_all_mobile_towers', [InspeksiSwitchController::class, 'approvalAll']);
 
             Route::apiResource('/towers', InspeksiTowerController::class);
             Route::post('/approval_towers', [InspeksiTowerController::class, 'approval']);
@@ -580,3 +577,20 @@ if (Route::middleware(['auth:sanctum', 'type.ict_developer'])) {
         });
     });
 }
+
+Route::get('/', [AuthController::class, 'index'])->name('auth.index');
+
+// Route::get('/', function () {
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
+
+// Route::get('/dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+// require __DIR__.'/auth.php';

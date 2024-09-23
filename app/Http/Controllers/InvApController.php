@@ -4,10 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\InvAp;
 use Carbon\Carbon;
+use Dedoc\Scramble\Scramble;
 use Illuminate\Http\Request;
 
 class InvApController extends Controller
 {
+
+    /**
+     * Display a listing of Inventory Access Point
+     * @response InvAp[]
+     */
+
     public function index()
     {
         $invap = InvAp::all();
@@ -16,6 +23,8 @@ class InvApController extends Controller
 
     public function store(Request $request)
     {
+        Scramble::ignoreDefaultRoutes();
+
         // start generate code
         $currentDate = Carbon::now();
         $year = $currentDate->format('y');
