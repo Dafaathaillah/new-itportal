@@ -53,6 +53,6 @@ return Application::configure(basePath: dirname(__DIR__))
                 // ], 404);
             // }
 
-            return redirect("api/");
+            return redirect("/login");
         });
     })->create();

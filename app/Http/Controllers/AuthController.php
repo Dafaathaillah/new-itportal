@@ -11,7 +11,7 @@ class AuthController extends Controller
 {
     public function index(){
         // return inertia('index/index');
-        return response()->json(['message' => 'Unauthenticated'], 401);
+        return response()->json(['message' => 'masih masuk api login'], 401);
     }
     
     public function register(Request $request)
