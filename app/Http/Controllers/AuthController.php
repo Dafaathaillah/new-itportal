@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     public function index(){
-        return inertia('index/index');
-        // return response()->json(['message' => 'Unauthenticated'], 401);
+        // return inertia('index/index');
+        return response()->json(['message' => 'Unauthenticated'], 401);
     }
     
     public function register(Request $request)
