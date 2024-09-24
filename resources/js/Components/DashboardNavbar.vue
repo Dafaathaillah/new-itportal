@@ -16,7 +16,12 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
                     <li class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                         aria-current="page">Dashboard</li>
                 </ol>
-                <h6 class="mb-0 font-bold text-white capitalize">Dashboard</h6>
+                <h6 v-if="$page.props.auth.user.role === 'ict_developer'" class="mb-0 font-bold text-white capitalize">Developer Dashboard</h6>
+                <h6 v-if="$page.props.auth.user.role === 'ict_group_leader'" class="mb-0 font-bold text-white capitalize">Group Leader Dashboard</h6>
+                <h6 v-if="$page.props.auth.user.role === 'ict_section'" class="mb-0 font-bold text-white capitalize">Section Dashboard</h6>
+                <h6 v-if="$page.props.auth.user.role === 'ict_technician'" class="mb-0 font-bold text-white capitalize">Ttechnician Dashboard</h6>
+                <h6 v-if="$page.props.auth.user.role === 'ict_admin'" class="mb-0 font-bold text-white capitalize">Admin Dashboard</h6>
+                <!-- <h6 class="mb-0 font-bold text-white capitalize">Dashboard Group Leader</h6> -->
             </nav>
 
             <div class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto">
