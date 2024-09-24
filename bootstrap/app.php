@@ -18,19 +18,20 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
 
-        // $middleware->alias([
-        //     'api' => [
-        //         \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-        //         'throttle:api',
-        //         \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        //     ],
-        //     'type.ict_developer' => \App\Http\Middleware\IctDeveloperMiddleware::class,
-        //     'type.ict_section_head' => \App\Http\Middleware\IctSectionHead::class,
-        //     'type.ict_group_leader' => \App\Http\Middleware\IctGroupLeader::class,
-        //     'type.ict_admin' => \App\Http\Middleware\IctAdmin::class,
-        //     'type.ict_technician' => \App\Http\Middleware\IctTechnician::class,
-        //     // 'type.ict_guest' => \App\Http\Middleware\AdminMiddleware::class,
-        // ]);
+        $middleware->alias([
+            'api' => [
+                \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+                'throttle:api',
+                \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            ],
+            'type.ict_developer' => \App\Http\Middleware\IctDeveloperMiddleware::class,
+            'type.ict_section_head' => \App\Http\Middleware\IctSectionHead::class,
+            'type.ict_group_leader' => \App\Http\Middleware\IctGroupLeader::class,
+            'type.ict_admin' => \App\Http\Middleware\IctAdmin::class,
+            'type.ict_technician' => \App\Http\Middleware\IctTechnician::class,
+            // 'type.ict_guest' => \App\Http\Middleware\AdminMiddleware::class,
+            'checkRole' => \App\Http\Middleware\CheckRole::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         // $exceptions->render(function (NotFoundHttpException $e, Request $request) {
@@ -53,6 +54,6 @@ return Application::configure(basePath: dirname(__DIR__))
                 // ], 404);
             // }
 
-            return redirect("/login");
+            return redirect('/redirectAuthenticatedUsers');
         });
     })->create();
