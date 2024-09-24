@@ -6,9 +6,9 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
-import DashboardAside from '@/Components/DashboardAside.vue';
-import DashboardNavbar from '@/Components/DashboardNavbar.vue';
-import DashboardConfig from '@/Components/DashboardConfig.vue';
+import DashboardAside from '@/Components/inventory/DashboardAside.vue';
+import DashboardNavbar from '@/Components/inventory/DashboardNavbar.vue';
+import DashboardConfig from '@/Components/inventory/DashboardConfig.vue';
 
 const showingNavigationDropdown = ref(false);
 </script>
