@@ -40,7 +40,7 @@
     </body>
 
     <!-- plugin for charts  -->
-    <script src="./assets/js/plugins/chartjs.min.js" async></script>
+    <script src="{{ asset('./assets/js/plugins/chartjs.min.js') }}" async></script>
 
     <!-- plugin for scrollbar  -->
     <script src="{{ asset('../assets/js/plugins/perfect-scrollbar.min.js')}}" async></script>
