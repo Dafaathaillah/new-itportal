@@ -35,6 +35,18 @@ Route::middleware('auth')->group(function () {
             return Inertia::render('Inventory/DashboardTechnician');
         })->name('technicianDashboard');
     });
+
+    Route::prefix('inventory')->group(function () {
+        Route::get('/accessPoint', function () {
+            // return "OKE";
+            return Inertia::render('Inventory/AccessPoint/AccessPoint');
+        })->name('accessPoint.page');
+        
+        Route::get('/accessPoint/create', function () {
+            // return "OKE";
+            return Inertia::render('Inventory/AccessPoint/AccessPointCreate');
+        })->name('accessPoint.create');
+    });
 });
 
 require __DIR__ . '/auth.php';
