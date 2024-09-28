@@ -1,5 +1,9 @@
 import './bootstrap';
 import '../css/app.css';
+import 'select2/dist/css/select2.min.css';
+import 'select2';
+import $ from 'jquery';
+window.$ = window.jQuery = $;
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';

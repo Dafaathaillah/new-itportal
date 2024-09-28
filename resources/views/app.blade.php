@@ -16,12 +16,16 @@
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <!-- Nucleo Icons -->
-    <link href="{{ asset('../assets/css/nucleo-icons.css')}}" rel="stylesheet" />
-    <link href="{{ asset('../assets/css/nucleo-svg.css')}}" rel="stylesheet" />
+    <link href="{{ asset('../assets/css/nucleo-icons.css') }}" rel="stylesheet" />
+    <link href="{{ asset('../assets/css/nucleo-svg.css') }}" rel="stylesheet" />
     <!-- Popper -->
     <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <!-- Main Styling -->
-    <link href="{{ asset('../assets/css/argon-dashboard-tailwind.css?v=1.0.1')}}" rel="stylesheet" />
+    <link href="{{ asset('../assets/css/argon-dashboard-tailwind.css?v=1.0.1') }}" rel="stylesheet" />
 
     <!-- Scripts -->
     @routes
@@ -29,13 +33,14 @@
     @inertiaHead
 </head>
 
-    @auth
+@auth
 
-        <body class="m-0 font-sans text-base antialiased font-normal dark:bg-slate-900 leading-default bg-gray-50 text-slate-500">
+    <body
+        class="m-0 font-sans text-base antialiased font-normal dark:bg-slate-900 leading-default bg-gray-50 text-slate-500">
     @else
 
         <body class="m-0 font-sans antialiased font-normal bg-white text-start text-base leading-default text-slate-500">
-    @endauth
+        @endauth
         @inertia
     </body>
 
@@ -43,8 +48,8 @@
     <script src="{{ asset('./assets/js/plugins/chartjs.min.js') }}" async></script>
 
     <!-- plugin for scrollbar  -->
-    <script src="{{ asset('../assets/js/plugins/perfect-scrollbar.min.js')}}" async></script>
+    <script src="{{ asset('../assets/js/plugins/perfect-scrollbar.min.js') }}" async></script>
     <!-- main script file  -->
-    <script src="{{ asset('../assets/js/argon-dashboard-tailwind.js?v=1.0.1')}}" async></script>
+    <script src="{{ asset('../assets/js/argon-dashboard-tailwind.js?v=1.0.1') }}" async></script>
 
 </html>
