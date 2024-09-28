@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\InvAp;
 use Carbon\Carbon;
 use Dedoc\Scramble\Scramble;
+use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class InvApController extends Controller
 {
@@ -17,38 +19,55 @@ class InvApController extends Controller
 
     public function index()
     {
-        $invap = InvAp::all();
-        return response()->json($invap);
+        $dataInventory = InvAp::all();
+        return Inertia::render('Inventory/AccessPoint/AccessPoint', ['accessPoint' => $dataInventory]);
+    }
+
+    public function create()
+    {
+        return Inertia::render('Inventory/AccessPoint/AccessPointCreate');
     }
 
     public function store(Request $request)
     {
-        Scramble::ignoreDefaultRoutes();
+        // // start generate code
+        // $currentDate = Carbon::now();
+        // $year = $currentDate->format('y');
+        // $month = $currentDate->month;
+        // $day = $currentDate->day;
 
-        // start generate code
-        $currentDate = Carbon::now();
-        $year = $currentDate->format('y');
-        $month = $currentDate->month;
-        $day = $currentDate->day;
+        // $maxId = InvAp::max('id');
 
-        $maxId = InvAp::max('id');
+        // if (is_null($maxId)) {
+        //     $maxId = 0;
+        // }
 
-        if (is_null($maxId)) {
-            $maxId = 0;
-        }
+        // $uniqueString = 'PPABIBAP' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
+        // $request['inventory_number'] = $uniqueString;
+        // // end generate code
+        $params = $request->all();
+        $data = [
+            'device_name' => $params['device_name'],
+            'inventory_number' => $params['inventory_number'],
+            'serial_number' => $params['serial_number'],
+            'ip_address' => $params['ip_address'],
+            'device_brand' => $params['device_brand'],
+            'device_type' => $params['device_type'],
+            'device_model' => $params['device_model'],
+            'location' => $params['location'],
+            'status' => $params['status'],
+            'note' => $params['note'],
+        ];
+        // DB::table('inv_aps')->insert($data);
+        InvAp::create($data);
+        return redirect()->route('accessPoint.page');
+    }
 
-        $uniqueString = 'PPABIBAP' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
-        $request['inventory_number'] = $uniqueString;
-        // end generate code
-
-        $invap_get_data = InvAp::find($request->id);
-        if (empty($invap_get_data)) {
-            $invap = InvAp::create($request->all());
-            return response()->json($invap, 201);
-        } else {
-            $invap = InvAp::firstWhere('id', $request->id)->update($request->all());
-            return response()->json($invap, 201);
-        }
+    public function edit($apId)
+    {
+        $accessPoint = InvAp::find($apId);
+        // return response()->json(['ap' => $accessPoint]);
+        return Inertia::render('Inventory/AccessPoint/AccessPointEdit', ['accessPoint' => $accessPoint]);
     }
 
     public function show($id)
@@ -60,13 +79,31 @@ class InvApController extends Controller
         return response()->json($invap);
     }
 
-    public function destroy($id)
+    public function update(Request $request)
     {
-        $invap = InvAp::find($id);
-        if (is_null($invap)) {
-            return response()->json(['message' => 'AP Device not found'], 404);
-        }
-        $invap->delete();
-        return response()->json(null, 204);
+        $params = $request->all();
+        $data = [
+            'device_name' => $params['device_name'],
+            'inventory_number' => $params['inventory_number'],
+            'serial_number' => $params['serial_number'],
+            'ip_address' => $params['ip_address'],
+            'device_brand' => $params['device_brand'],
+            'device_type' => $params['device_type'],
+            'device_model' => $params['device_model'],
+            'location' => $params['location'],
+            'status' => $params['status'],
+            'note' => $params['note'],
+        ];
+        // DB::table('inv_aps')->insert($data);
+        InvAp::firstWhere('id', $request->id)->update($data);
+        return redirect()->route('accessPoint.page');
+    }
+
+    public function destroy($apId)
+    {
+        $accessPoint = InvAp::find($apId);
+        // return response()->json(['ap' => $accessPoint]);
+        $accessPoint->delete();
+        return redirect()->back();
     }
 }

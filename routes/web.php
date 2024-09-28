@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
+use App\Http\Controllers\InvApController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -37,15 +38,23 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('inventory')->group(function () {
-        Route::get('/accessPoint', function () {
-            // return "OKE";
-            return Inertia::render('Inventory/AccessPoint/AccessPoint');
-        })->name('accessPoint.page');
+        Route::get('/accessPoint', [InvApController::class, 'index'])
+        ->name('accessPoint.page');
         
-        Route::get('/accessPoint/create', function () {
-            // return "OKE";
-            return Inertia::render('Inventory/AccessPoint/AccessPointCreate');
-        })->name('accessPoint.create');
+        Route::get('/accessPoint/create', [InvApController::class, 'create'])
+        ->name('accessPoint.create');
+
+        Route::post('/accessPoint/create', [InvApController::class, 'store'])
+        ->name('accessPoint.store');
+
+        Route::get('/accessPoint/{apId}/edit', [InvApController::class, 'edit'])
+        ->name('accessPoint.edit');
+
+        Route::put('/accessPoint/{apId}/update', [InvApController::class, 'update'])
+        ->name('accessPoint.update');
+
+        Route::delete('/accessPoint/{apId}/delete', [InvApController::class, 'destroy'])
+        ->name('accessPoint.delete');
     });
 });
 

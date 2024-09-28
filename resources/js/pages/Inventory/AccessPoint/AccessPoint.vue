@@ -1,7 +1,66 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head } from "@inertiajs/vue3";
-import NavLink from "@/Components/NavLink.vue";
+import { Head, Link, useForm } from "@inertiajs/vue3";
+import NavLinkCustom from "@/Components/NavLinkCustom.vue";
+import moment from "moment";
+import Swal from "sweetalert2";
+
+// Fungsi untuk format tanggal
+function formattedDate(date) {
+    return moment(date).format("MMMM Do, YYYY"); // Sesuaikan format sesuai kebutuhan
+}
+
+const props = defineProps({
+    accessPoint: {
+        type: Array,
+    },
+});
+
+const form = useForm({});
+
+const deleteData = (id) => {
+    // Call SweetAlert for confirmation
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Perform the delete operation, e.g., by making a request to the server
+            form.delete(route("accessPoint.delete", { id: id }), {
+                onSuccess: () => {
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success",
+                        confirmButtonColor: "#3085d6",
+                    });
+                },
+            });
+        }
+    });
+};
+
+const editData = (id) => {
+    // Call SweetAlert for confirmation
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't edit this data?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            form.get(route("accessPoint.edit", { id: id }));
+        }
+    });
+};
 </script>
 
 <template>
@@ -42,13 +101,13 @@ import NavLink from "@/Components/NavLink.vue";
                             <div
                                 class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
                             >
-                                <NavLink
+                                <Link
                                     :href="route('accessPoint.create')"
                                     class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
                                 >
                                     <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
                                     New Data
-                                </NavLink>
+                                </Link>
                             </div>
                             <div class="flex-auto px-0 pt-0 pb-2">
                                 <div class="p-0 overflow-x-auto">
@@ -65,38 +124,85 @@ import NavLink from "@/Components/NavLink.vue";
                                                 <th
                                                     class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
                                                 >
-                                                    Device Name
+                                                    Inventory Number
                                                 </th>
                                                 <th
                                                     class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                                                >
+                                                    Ip Address
+                                                </th>
+                                                <th
+                                                    class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                                                >
+                                                    Device Name
+                                                </th>
+                                                <th
+                                                    class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                                                >
+                                                    Device Model
+                                                </th>
+                                                <th
+                                                    class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
                                                 >
                                                     Device Type
                                                 </th>
                                                 <th
                                                     class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
                                                 >
-                                                    Device Status
+                                                    Frequency
                                                 </th>
                                                 <th
                                                     class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
                                                 >
-                                                    Inventory At
+                                                    Mac Address
                                                 </th>
                                                 <th
-                                                    class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-collapse border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                                                    class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                                                >
+                                                    Location
+                                                </th>
+                                                <th
+                                                    class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                                                >
+                                                    Note
+                                                </th>
+                                                <th
+                                                    class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                                                >
+                                                    Inspection remark
+                                                </th>
+                                                <th
+                                                    class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                                                >
+                                                    Device Status
+                                                </th>
+
+                                                <th
+                                                    class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                                                >
+                                                    Last Edit At
+                                                </th>
+                                                <th
+                                                    class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
                                                 >
                                                     Action
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
+                                            <tr
+                                                v-for="(
+                                                    accessPoints, index
+                                                ) in accessPoint"
+                                                :key="index"
+                                            >
                                                 <td
                                                     class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                 >
                                                     <span
                                                         class="text-xs font-semibold leading-tight dark:text-white dark:opacity-80 text-slate-400"
-                                                        >1
+                                                    >
+                                                        {{ index + 1 }}
                                                     </span>
                                                 </td>
                                                 <td
@@ -105,7 +211,9 @@ import NavLink from "@/Components/NavLink.vue";
                                                     <p
                                                         class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                     >
-                                                        Access Point
+                                                        {{
+                                                            accessPoints.inventory_number
+                                                        }}
                                                     </p>
                                                 </td>
                                                 <td
@@ -114,88 +222,145 @@ import NavLink from "@/Components/NavLink.vue";
                                                     <p
                                                         class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                     >
-                                                        Ubiquity
+                                                        {{
+                                                            accessPoints.ip_address
+                                                        }}
                                                     </p>
-                                                </td>
-                                                <td
-                                                    class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                >
-                                                    <span
-                                                        class="bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white"
-                                                        >Online</span
-                                                    >
-                                                </td>
-                                                <td
-                                                    class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                >
-                                                    <span
-                                                        class="text-xs font-semibold leading-tight dark:text-white dark:opacity-80 text-slate-400"
-                                                        >23/04/18</span
-                                                    >
                                                 </td>
                                                 <td
                                                     class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                 >
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="text-xs font-semibold leading-tight dark:text-white dark:opacity-80 text-slate-400"
+                                                    <p
+                                                        class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                     >
-                                                        Edit
-                                                    </a>
+                                                        {{
+                                                            accessPoints.device_name
+                                                        }}
+                                                    </p>
                                                 </td>
-                                            </tr>
-                                            <tr>
                                                 <td
                                                     class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                 >
                                                     <span
                                                         class="text-xs font-semibold leading-tight dark:text-white dark:opacity-80 text-slate-400"
-                                                        >1
+                                                    >
+                                                        {{
+                                                            accessPoints.device_model
+                                                        }}
                                                     </span>
                                                 </td>
                                                 <td
-                                                    class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                >
-                                                    <p
-                                                        class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Access Point
-                                                    </p>
-                                                </td>
-                                                <td
-                                                    class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                >
-                                                    <p
-                                                        class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Ubiquity
-                                                    </p>
-                                                </td>
-                                                <td
-                                                    class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                 >
                                                     <span
-                                                        class="bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white"
-                                                        >Online</span
+                                                        class="text-xs font-semibold leading-tight dark:text-white dark:opacity-80 text-slate-400"
                                                     >
+                                                        {{
+                                                            accessPoints.device_type
+                                                        }}
+                                                    </span>
                                                 </td>
                                                 <td
                                                     class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                 >
                                                     <span
                                                         class="text-xs font-semibold leading-tight dark:text-white dark:opacity-80 text-slate-400"
-                                                        >23/04/18</span
                                                     >
+                                                        {{
+                                                            accessPoints.frequency
+                                                        }}
+                                                    </span>
                                                 </td>
                                                 <td
-                                                    class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                 >
-                                                    <a
-                                                        href="javascript:;"
+                                                    <span
+                                                        class="text-xs font-semibold leading-tight dark:text-white dark:opacity-80 text-slate-400"
+                                                    >
+                                                        {{
+                                                            accessPoints.mac_address
+                                                        }}
+                                                    </span>
+                                                </td>
+                                                <td
+                                                    class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                >
+                                                    <span
+                                                        class="text-xs font-semibold leading-tight dark:text-white dark:opacity-80 text-slate-400"
+                                                    >
+                                                        {{
+                                                            accessPoints.location
+                                                        }}
+                                                    </span>
+                                                </td>
+                                                <td
+                                                    class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                >
+                                                    <span
+                                                        class="text-xs font-semibold leading-tight dark:text-white dark:opacity-80 text-slate-400"
+                                                    >
+                                                        {{ accessPoints.note }}
+                                                    </span>
+                                                </td>
+                                                <td
+                                                    class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                >
+                                                    <span
+                                                        class="text-xs font-semibold leading-tight dark:text-white dark:opacity-80 text-slate-400"
+                                                    >
+                                                        {{
+                                                            accessPoints.inspection_remark
+                                                        }}
+                                                    </span>
+                                                </td>
+                                                <td
+                                                    class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                >
+                                                    <span
+                                                        class="bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white"
+                                                    >
+                                                        {{
+                                                            accessPoints.status
+                                                        }}
+                                                    </span>
+                                                </td>
+                                                <td
+                                                    class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                >
+                                                    <span
+                                                        class="text-xs font-semibold leading-tight dark:text-white dark:opacity-80 text-slate-400"
+                                                    >
+                                                        {{
+                                                            formattedDate(
+                                                                accessPoints.updated_at
+                                                            )
+                                                        }}
+                                                    </span>
+                                                </td>
+                                                <td
+                                                    class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                >
+                                                    <NavLinkCustom
+                                                        @click="
+                                                            editData(
+                                                                accessPoints.id
+                                                            )
+                                                        "
                                                         class="text-xs font-semibold leading-tight dark:text-white dark:opacity-80 text-slate-400"
                                                     >
                                                         Edit
-                                                    </a>
+                                                    </NavLinkCustom>
+
+                                                    <NavLinkCustom
+                                                        @click="
+                                                            deleteData(
+                                                                accessPoints.id
+                                                            )
+                                                        "
+                                                        class="ml-3 text-xs font-semibold leading-tight dark:text-white dark:opacity-80 text-slate-400"
+                                                    >
+                                                        Delete
+                                                    </NavLinkCustom>
                                                 </td>
                                             </tr>
                                         </tbody>

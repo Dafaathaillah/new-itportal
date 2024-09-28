@@ -4,17 +4,45 @@ import { Link } from "@inertiajs/vue3";
 import { Head, useForm } from "@inertiajs/vue3";
 import Swal from "sweetalert2";
 
+const props = defineProps(["accessPoint"]);
+
 const form = useForm({
-    device_name: "",
-    inventory_number: "",
-    ip_address: "",
-    device_brand: "",
-    device_type: "",
-    device_model: "",
-    location: "",
-    status: "",
-    note: "",
+    id: props.accessPoint.id,
+    device_name: props.accessPoint.device_name,
+    inventory_number: props.accessPoint.inventory_number,
+    serial_number: props.accessPoint.serial_number,
+    ip_address: props.accessPoint.ip_address,
+    device_brand: props.accessPoint.device_brand,
+    device_type: props.accessPoint.device_type,
+    device_model: props.accessPoint.device_model,
+    location: props.accessPoint.location,
+    status: props.accessPoint.status,
+    note: props.accessPoint.note,
 });
+
+const update = () => {
+    form.put(route("accessPoint.update", props.accessPoint.id), {
+        onSuccess: () => {
+            // Show SweetAlert2 success notification
+            Swal.fire({
+                title: "Success!",
+                text: "Data has been successfully updated!",
+                icon: "success",
+                confirmButtonText: "OK",
+                confirmButtonColor: "#3085d6",
+            });
+        },
+        onError: () => {
+            Swal.fire({
+                title: "error!",
+                text: "Data not updated!",
+                icon: "waring",
+                confirmButtonText: "OK",
+                confirmButtonColor: "#3085d6",
+            });
+        },
+    });
+};
 
 const save = () => {
     form.post(route("accessPoint.store"), {
@@ -63,7 +91,7 @@ const save = () => {
                     </Link>
                 </ol>
                 <h6 class="mb-0 font-bold text-white capitalize">
-                    Access Point Create Pages
+                    Access Point Edit Pages
                 </h6>
             </nav>
         </template>
@@ -81,12 +109,12 @@ const save = () => {
                         >
                             <div class="flex items-center">
                                 <p class="mb-0 font-bold dark:text-white/80">
-                                    Form Create Access Point
+                                    Form Edit Access Point
                                 </p>
                             </div>
                         </div>
                         <div class="flex-auto p-6">
-                            <form @submit.prevent="save">
+                            <form @submit.prevent="update">
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
@@ -301,7 +329,7 @@ const save = () => {
                                         <span
                                             class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
                                         >
-                                            Save
+                                            Save Changes
                                         </span>
                                     </button>
                                     <Link
