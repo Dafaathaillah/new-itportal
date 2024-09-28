@@ -1,5 +1,6 @@
 <script setup>
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
+import NavLink from "@/Components/NavLink.vue";
 </script>
 
 <template>
@@ -45,9 +46,9 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
                     v-if="$page.props.auth.user.role === 'ict_developer'"
                     class="mt-0.5 w-full"
                 >
-                    <ResponsiveNavLink
+                    <NavLink
                         :href="route('developerDashboard')"
-                        class="py-2.7 bg-blue-500/13 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold text-slate-700 transition-colors"
+                        :active="route().current('developerDashboard')"
                     >
                         <div
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
@@ -60,15 +61,15 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                             >Dashboard</span
                         >
-                    </ResponsiveNavLink>
+                    </NavLink>
                 </li>
                 <li
                     v-if="$page.props.auth.user.role === 'ict_group_leader'"
                     class="mt-0.5 w-full"
                 >
-                    <ResponsiveNavLink
+                    <NavLink
                         :href="route('groupLeaderDashboard')"
-                        class="py-2.7 bg-blue-500/13 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold text-slate-700 transition-colors"
+                        :active="route().current('groupLeaderDashboard')"
                     >
                         <div
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
@@ -81,15 +82,15 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                             >Dashboard</span
                         >
-                    </ResponsiveNavLink>
+                    </NavLink>
                 </li>
                 <li
                     v-if="$page.props.auth.user.role === 'ict_section'"
                     class="mt-0.5 w-full"
                 >
-                    <ResponsiveNavLink
+                    <NavLink
                         :href="route('sectionDashboard')"
-                        class="py-2.7 bg-blue-500/13 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold text-slate-700 transition-colors"
+                        :active="route().current('sectionDashboard')"
                     >
                         <div
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
@@ -102,15 +103,15 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                             >Dashboard</span
                         >
-                    </ResponsiveNavLink>
+                    </NavLink>
                 </li>
                 <li
                     v-if="$page.props.auth.user.role === 'ict_technician'"
                     class="mt-0.5 w-full"
                 >
-                    <ResponsiveNavLink
+                    <NavLink
                         :href="route('technicianDashboard')"
-                        class="py-2.7 bg-blue-500/13 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold text-slate-700 transition-colors"
+                        :active="route().current('technicianDashboard')"
                     >
                         <div
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
@@ -123,15 +124,15 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                             >Dashboard</span
                         >
-                    </ResponsiveNavLink>
+                    </NavLink>
                 </li>
                 <li
                     v-if="$page.props.auth.user.role === 'ict_admin'"
                     class="mt-0.5 w-full"
                 >
-                    <ResponsiveNavLink
+                    <NavLink
                         :href="route('adminDashboard')"
-                        class="py-2.7 bg-blue-500/13 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold text-slate-700 transition-colors"
+                        :active="route().current('adminDashboard')"
                     >
                         <div
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
@@ -144,14 +145,13 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                             >Dashboard</span
                         >
-                    </ResponsiveNavLink>
+                    </NavLink>
                 </li>
 
                 <li class="mt-0.5 w-full">
-                    <ResponsiveNavLink
+                    <NavLink
                         :href="route('accessPoint.page')"
-                        as="a"
-                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                        :active="route().current('accessPoint.page')"
                     >
                         <div
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
@@ -164,7 +164,7 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                             >Access Point</span
                         >
-                    </ResponsiveNavLink>
+                    </NavLink>
                 </li>
 
                 <li class="mt-0.5 w-full">
