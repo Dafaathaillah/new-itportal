@@ -20,7 +20,7 @@ class InvApController extends Controller
     public function index()
     {
         $dataInventory = InvAp::all();
-        return Inertia::render('Inventory/AccessPoint/AccessPoint', ['accessPoint' => $dataInventory]);
+        return Inertia::render('Inventory/AccessPoint/AccessPoint', ['accessPointx' => $dataInventory]);
     }
 
     public function create()

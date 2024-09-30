@@ -27,7 +27,8 @@
         "jquery": "^3.7.1",
         "moment": "^2.30.1",
         "select2": "^4.1.0-rc.0",
-        "sweetalert2": "^11.14.1",
+        "sweetalert2": "^11.6.13",
+        "vue-router": "^4.4.5",
         "vue3-easy-data-table": "^1.5.47"
     }
 }
