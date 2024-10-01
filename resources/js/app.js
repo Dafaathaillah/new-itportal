@@ -2,6 +2,11 @@ import './bootstrap';
 import '../css/app.css';
 import 'select2/dist/css/select2.min.css';
 import 'select2';
+import DataTablesLib from 'datatables.net'; 
+import DataTable from 'datatables.net-vue3';
+ 
+DataTable.use(DataTablesLib);
+
 import $ from 'jquery';
 window.$ = window.jQuery = $;
 
@@ -19,6 +24,7 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
+            .component('DataTable', DataTable) 
             .mount(el);
     },
     progress: {
