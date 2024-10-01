@@ -3,6 +3,7 @@ import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
 import { Link } from "@inertiajs/vue3";
 import { Head, useForm } from "@inertiajs/vue3";
 import Swal from "sweetalert2";
+import { ref } from 'vue';
 
 const props = defineProps(["accessPoint"]);
 
@@ -19,6 +20,8 @@ const form = useForm({
     status: props.accessPoint.status,
     note: props.accessPoint.note,
 });
+
+const isDisabled = ref(true);
 
 const update = () => {
     form.put(route("accessPoint.update", props.accessPoint.id), {
@@ -147,6 +150,7 @@ const save = () => {
                                                 >Inventory Number</label
                                             >
                                             <input
+                                                :disabled="isDisabled"
                                                 type="text"
                                                 name="inventory_number"
                                                 v-model="form.inventory_number"

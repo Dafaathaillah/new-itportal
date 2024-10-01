@@ -10,6 +10,7 @@ class InvAp extends Model
     use HasFactory;
 
     protected $fillable = [
+        'max_id',
         'device_name',
         'inventory_number',
         'serial_number',

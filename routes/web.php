@@ -55,6 +55,8 @@ Route::middleware('auth')->group(function () {
 
         Route::delete('/accessPoint/{apId}/delete', [InvApController::class, 'destroy'])
         ->name('accessPoint.delete');
+
+        Route::post('/uploadCsv', [InvApController::class, 'uploadCsv'])->name('accessPoint.import');
     });
 });
 

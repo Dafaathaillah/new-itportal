@@ -3,10 +3,15 @@ import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
 import { Link } from "@inertiajs/vue3";
 import { Head, useForm } from "@inertiajs/vue3";
 import Swal from "sweetalert2";
+import { ref } from 'vue';
+
+
+const props = defineProps(["inventoryNumber"]);
 
 const form = useForm({
     device_name: "",
-    inventory_number: "",
+    inventory_number: props.inventoryNumber,
+    serial_number: "",
     ip_address: "",
     device_brand: "",
     device_type: "",
@@ -15,6 +20,8 @@ const form = useForm({
     status: "",
     note: "",
 });
+
+const isDisabled = ref(true);
 
 const save = () => {
     form.post(route("accessPoint.store"), {
@@ -101,6 +108,7 @@ const save = () => {
                                                 >Device Name</label
                                             >
                                             <input
+                                                required
                                                 type="text"
                                                 name="device_name"
                                                 v-model="form.device_name"
@@ -119,6 +127,8 @@ const save = () => {
                                                 >Inventory Number</label
                                             >
                                             <input
+                                                :disabled="isDisabled"
+                                                required
                                                 type="text"
                                                 name="inventory_number"
                                                 v-model="form.inventory_number"
@@ -138,6 +148,7 @@ const save = () => {
                                                 >Serial Number</label
                                             >
                                             <input
+                                                required
                                                 type="text"
                                                 v-model="form.serial_number"
                                                 name="serial_number"
@@ -174,6 +185,7 @@ const save = () => {
                                                 >Device Brand</label
                                             >
                                             <input
+                                                required
                                                 type="text"
                                                 v-model="form.device_brand"
                                                 name="device_brand"
@@ -192,6 +204,7 @@ const save = () => {
                                                 >Device Type</label
                                             >
                                             <input
+                                                required
                                                 type="text"
                                                 v-model="form.device_type"
                                                 name="device_type"
@@ -210,6 +223,7 @@ const save = () => {
                                                 >Device Model</label
                                             >
                                             <input
+                                                required
                                                 type="text"
                                                 v-model="form.device_model"
                                                 name="device_model"
@@ -228,6 +242,7 @@ const save = () => {
                                                 >Device Location</label
                                             >
                                             <input
+                                                required
                                                 type="text"
                                                 v-model="form.location"
                                                 name="location"
@@ -247,6 +262,7 @@ const save = () => {
                                                 Status</label
                                             >
                                             <select
+                                                required
                                                 id="status"
                                                 v-model="form.status"
                                                 name="status"
