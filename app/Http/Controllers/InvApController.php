@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ImportAp;
 use App\Models\InvAp;
 use Carbon\Carbon;
 use Dedoc\Scramble\Scramble;
 use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use League\Csv\Reader;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InvApController extends Controller
 {
@@ -25,28 +28,34 @@ class InvApController extends Controller
 
     public function create()
     {
-        return Inertia::render('Inventory/AccessPoint/AccessPointCreate');
+        // start generate code
+        $currentDate = Carbon::now();
+        $year = $currentDate->format('y');
+        $month = $currentDate->month;
+        $day = $currentDate->day;
+
+        $maxId = InvAp::max('max_id');
+
+        if (is_null($maxId)) {
+            $maxId = 0;
+        }
+
+        $uniqueString = 'PPABIBAP' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
+        $request['inventory_number'] = $uniqueString;
+        // end generate code
+
+        return Inertia::render('Inventory/AccessPoint/AccessPointCreate', ['inventoryNumber' => $uniqueString]);
     }
 
     public function store(Request $request)
     {
-        // // start generate code
-        // $currentDate = Carbon::now();
-        // $year = $currentDate->format('y');
-        // $month = $currentDate->month;
-        // $day = $currentDate->day;
-
-        // $maxId = InvAp::max('id');
-
-        // if (is_null($maxId)) {
-        //     $maxId = 0;
-        // }
-
-        // $uniqueString = 'PPABIBAP' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
-        // $request['inventory_number'] = $uniqueString;
-        // // end generate code
+        $maxId = InvAp::max('max_id');
+        if (is_null($maxId)) {
+            $maxId = 1;
+        }
         $params = $request->all();
         $data = [
+            'max_id' => $maxId,
             'device_name' => $params['device_name'],
             'inventory_number' => $params['inventory_number'],
             'serial_number' => $params['serial_number'],
@@ -61,6 +70,70 @@ class InvApController extends Controller
         // DB::table('inv_aps')->insert($data);
         InvAp::create($data);
         return redirect()->route('accessPoint.page');
+    }
+
+    // public function uploadCsv(Request $request)
+    // {
+    //     $request->validate([
+    //         'file' => 'required|mimes:csv,xlsx,xls',
+    //     ]);
+
+    //     $file = $request->file('file');
+    //     $extension = $file->getClientOriginalExtension();
+
+    //     $records = [];
+
+    //     if ($extension === 'csv') {
+    //         $csv = Reader::createFromPath($file->getRealPath(), 'r');
+    //         $csv->setHeaderOffset(0); // Assuming the first row is the header
+    //         $records = $csv->getRecords(); // Array of rows
+    //     } elseif (in_array($extension, ['xls', 'xlsx'])) {
+    //         $array = Excel::toArray(new MoviesImport, $file);
+    //         dd($array);
+
+    //         $excelData = Excel::toArray([], $file); // Converts the Excel file to an array
+    //         $sheetData = $excelData[0]; // Assuming you are working with the first sheet
+
+    //         // Assuming the first row is the header
+    //         $header = array_shift($sheetData); // Extract header row
+    //         foreach ($sheetData as $row) {
+    //             $records[] = array_combine($header, $row); // Combine header with row data
+    //         }
+    //     }
+    //     dd($records);
+    //     // foreach ($records as $record) {
+    //     //     $maxId = InvAp::max('max_id');
+    //     //     if (is_null($maxId)) {
+    //     //         $maxId = 1;
+    //     //     }
+    //     //     InvAp::create([
+    //     //         'max_id' => $maxId,
+    //     //         'device_name' => 'ada',
+    //     //         'inventory_number' => 'ada',
+    //     //         'serial_number' => 'ada',
+    //     //         'ip_address' => 'ada',
+    //     //         'device_brand' => 'ada',
+    //     //         'device_type' => 'ada',
+    //     //         'device_model' => 'ada',
+    //     //         'location' => 'ada',
+    //     //         'status' => 'ada',
+    //     //         'note' => 'ada',
+    //     //     ]);
+    //     // }
+
+    //     return redirect()->back()->with('success', 'File data imported successfully!');
+    // }
+
+    public function uploadCsv(Request $request)
+    {
+        try {
+
+            Excel::import(new ImportAp, $request->file('file'));
+            return redirect()->route('accessPoint.page');
+        } catch (\Exception $ex) {
+            Log::info($ex);
+            return response()->json(['data' => 'Some error has occur.', 400]);
+        }
     }
 
     public function edit($apId)
