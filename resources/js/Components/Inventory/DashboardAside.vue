@@ -122,7 +122,7 @@ export default {
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
                             <i class="relative top-0 text-sm leading-normal text-orange-500 ni ni-calendar-grid-58"></i>
                         </div>
-                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Access Point</span>
+                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Inventory</span>
                         <i v-if="!dropDownStatus" class="ms-3 fas fa-angle-right"></i>
                         <i v-else class="ms-3 fas fa-angle-down"></i>
                     </div>
@@ -141,7 +141,7 @@ export default {
                                 <i
                                     class="relative top-0 text-sm leading-normal text-orange-500 ni ni-calendar-grid-58"></i>
                             </div>
-                            <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Access Point</span>
+                            <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Switch</span>
                         </NavLink>
                     </ul>
                 </li>
