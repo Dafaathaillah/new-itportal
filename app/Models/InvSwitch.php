@@ -10,9 +10,13 @@ class InvSwitch extends Model
     use HasFactory;
 
     protected $fillable = [
+        'max_id',
         'device_name',
         'inventory_number',
+        'asset_ho_number',
         'serial_number',
+        'frequency',
+        'mac_address',
         'ip_address',
         'device_brand',
         'device_type',
