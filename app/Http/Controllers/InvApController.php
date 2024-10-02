@@ -23,7 +23,7 @@ class InvApController extends Controller
     public function index()
     {
         $dataInventory = InvAp::all();
-        return Inertia::render('Inventory/AccessPoint/AccessPoint', ['accessPointx' => $dataInventory]);
+        return Inertia::render('Inventory/AccessPoint/AccessPoint', ['accessPoint' => $dataInventory]);
     }
 
     public function create()
@@ -58,7 +58,10 @@ class InvApController extends Controller
             'max_id' => $maxId,
             'device_name' => $params['device_name'],
             'inventory_number' => $params['inventory_number'],
+            'asset_ho_number' => $params['asset_ho_number'],
             'serial_number' => $params['serial_number'],
+            'frequency' => $params['frequency'],
+            'mac_address' => $params['mac_address'],
             'ip_address' => $params['ip_address'],
             'device_brand' => $params['device_brand'],
             'device_type' => $params['device_type'],
@@ -158,7 +161,10 @@ class InvApController extends Controller
         $data = [
             'device_name' => $params['device_name'],
             'inventory_number' => $params['inventory_number'],
+            'asset_ho_number' => $params['asset_ho_number'],
             'serial_number' => $params['serial_number'],
+            'frequency' => $params['frequency'],
+            'mac_address' => $params['mac_address'],
             'ip_address' => $params['ip_address'],
             'device_brand' => $params['device_brand'],
             'device_type' => $params['device_type'],
