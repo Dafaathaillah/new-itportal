@@ -46,6 +46,8 @@ class InvSwitchController extends Controller
         $maxId = InvSwitch::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;
+        }else{
+            $maxId = $maxId + 1;
         }
         $params = $request->all();
         $data = [
@@ -86,15 +88,6 @@ class InvSwitchController extends Controller
         $switch = InvSwitch::find($swId);
         return Inertia::render('Inventory/Switch/SwitchEdit', ['switch' => $switch]);
     }
-
-    // public function show($id)
-    // {
-    //     $invSwitch = InvSwitch::find($id);
-    //     if (is_null($invSwitch)) {
-    //         return response()->json(['message' => 'Switch Device not found'], 404);
-    //     }
-    //     return response()->json($invSwitch);
-    // }
 
     public function update(Request $request)
     {

@@ -25,7 +25,7 @@ class RedirectAuthenticatedUsersController extends Controller
             return redirect('adminDashboard');
         }
         else{
-            return redirect('login');
+            return redirect('/login');
         }
     }
 }

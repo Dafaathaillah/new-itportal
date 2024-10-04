@@ -8,13 +8,14 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import { Link } from "@inertiajs/vue3";
 import DashboardAside from "@/Components/inventory/DashboardAside.vue";
 import DashboardNavbar from "@/Components/inventory/DashboardNavbar.vue";
+import DashboardFooter from "@/Components/inventory/DashboardFooter.vue";
 import DashboardConfig from "@/Components/inventory/DashboardConfig.vue";
 
 const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
-    <div class="absolute w-full bg-blue-500 dark:hidden min-h-75"></div>
+    <div class="absolute w-full bg-red-700 dark:hidden min-h-75"></div>
 
     <DashboardAside />
 
@@ -77,7 +78,7 @@ const showingNavigationDropdown = ref(false);
         </nav>
 
         <slot />
+    <DashboardFooter />
     </main>
-
     <DashboardConfig />
 </template>
