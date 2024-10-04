@@ -29,7 +29,7 @@ class InvApController extends Controller
     public function create()
     {
         // start generate code
-        $currentDate = Carbon::now();
+        $currentDate = Carbon::tomorrow();
         $year = $currentDate->format('y');
         $month = $currentDate->month;
         $day = $currentDate->day;
@@ -52,6 +52,8 @@ class InvApController extends Controller
         $maxId = InvAp::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;
+        }else{
+            $maxId = $maxId + 1;
         }
         $params = $request->all();
         $data = [

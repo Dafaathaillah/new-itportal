@@ -5,28 +5,53 @@ import { Head, useForm } from "@inertiajs/vue3";
 import Swal from "sweetalert2";
 import { ref } from "vue";
 
-const props = defineProps(["inventoryNumber"]);
+const props = defineProps(["wirelless"]);
 
 const form = useForm({
-    device_name: "",
-    inventory_number: props.inventoryNumber,
-    asset_ho_number: "",
-    serial_number: "",
-    frequency: "",
-    mac_address: "",
-    ip_address: "",
-    device_brand: "",
-    device_type: "",
-    device_model: "",
-    location: "",
-    status: "",
-    note: "",
+    id: props.wirelless.id,
+    device_name: props.wirelless.device_name,
+    inventory_number: props.wirelless.inventory_number,
+    asset_ho_number: props.wirelless.asset_ho_number,
+    serial_number: props.wirelless.serial_number,
+    frequency: props.wirelless.frequency,
+    mac_address: props.wirelless.mac_address,
+    ip_address: props.wirelless.ip_address,
+    device_brand: props.wirelless.device_brand,
+    device_type: props.wirelless.device_type,
+    device_model: props.wirelless.device_model,
+    location: props.wirelless.location,
+    status: props.wirelless.status,
+    note: props.wirelless.note,
 });
 
 const isDisabled = ref(true);
 
+const update = () => {
+    form.put(route("wirelless.update", props.wirelless.id), {
+        onSuccess: () => {
+            // Show SweetAlert2 success notification
+            Swal.fire({
+                title: "Success!",
+                text: "Data has been successfully updated!",
+                icon: "success",
+                confirmButtonText: "OK",
+                confirmButtonColor: "#3085d6",
+            });
+        },
+        onError: () => {
+            Swal.fire({
+                title: "error!",
+                text: "Data not updated!",
+                icon: "waring",
+                confirmButtonText: "OK",
+                confirmButtonColor: "#3085d6",
+            });
+        },
+    });
+};
+
 const save = () => {
-    form.post(route("switch.store"), {
+    form.post(route("wirelless.store"), {
         onSuccess: () => {
             // Show SweetAlert2 success notification
             Swal.fire({
@@ -64,15 +89,15 @@ const save = () => {
                         <a class="text-white opacity-50">Pages</a>
                     </li>
                     <Link
-                        :href="route('switch.page')"
+                        :href="route('wirelless.page')"
                         class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                         aria-current="page"
                     >
-                        Switch
+                        Wirelless
                     </Link>
                 </ol>
                 <h6 class="mb-0 font-bold text-white capitalize">
-                    Switch Create Pages
+                    Wirelless Edit Pages
                 </h6>
             </nav>
         </template>
@@ -90,12 +115,12 @@ const save = () => {
                         >
                             <div class="flex items-center">
                                 <p class="mb-0 font-bold dark:text-white/80">
-                                    Form Create Switch
+                                    Form Edit Wirelless
                                 </p>
                             </div>
                         </div>
                         <div class="flex-auto p-6">
-                            <form @submit.prevent="save">
+                            <form @submit.prevent="update">
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
@@ -110,7 +135,6 @@ const save = () => {
                                                 >Device Name</label
                                             >
                                             <input
-                                                required
                                                 type="text"
                                                 name="device_name"
                                                 v-model="form.device_name"
@@ -130,7 +154,6 @@ const save = () => {
                                             >
                                             <input
                                                 :disabled="isDisabled"
-                                                required
                                                 type="text"
                                                 name="inventory_number"
                                                 v-model="form.inventory_number"
@@ -150,7 +173,6 @@ const save = () => {
                                                 >Asset Ho Number</label
                                             >
                                             <input
-                                                required
                                                 type="text"
                                                 v-model="form.asset_ho_number"
                                                 name="asset_ho_number"
@@ -169,49 +191,9 @@ const save = () => {
                                                 >Serial Number</label
                                             >
                                             <input
-                                                required
                                                 type="text"
                                                 v-model="form.serial_number"
                                                 name="serial_number"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
-                                            />
-                                        </div>
-                                    </div>
-
-                                       <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="frequesncy"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Frequency</label
-                                            >
-                                            <input
-                                                required
-                                                type="text"
-                                                v-model="form.frequency"
-                                                name="frequency"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="mac-address"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Mac Address</label
-                                            >
-                                            <input
-                                                required
-                                                type="text"
-                                                v-model="form.mac_address"
-                                                name="mac_address"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
                                                 placeholder="00:04:xx:xx:xx:xx"
                                             />
@@ -235,6 +217,42 @@ const save = () => {
                                             />
                                         </div>
                                     </div>
+                                      <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="frequency"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Frequency</label
+                                            >
+                                            <input
+                                                type="text"
+                                                v-model="form.frequency"
+                                                name="frequency"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="00:04:xx:xx:xx:xx"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="mac_address"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Mac Address</label
+                                            >
+                                            <input
+                                                type="text"
+                                                v-model="form.mac_address"
+                                                name="mac_address"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="10.1.x.xx"
+                                            />
+                                        </div>
+                                    </div>
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
@@ -245,7 +263,6 @@ const save = () => {
                                                 >Device Brand</label
                                             >
                                             <input
-                                                required
                                                 type="text"
                                                 v-model="form.device_brand"
                                                 name="device_brand"
@@ -264,7 +281,6 @@ const save = () => {
                                                 >Device Type</label
                                             >
                                             <input
-                                                required
                                                 type="text"
                                                 v-model="form.device_type"
                                                 name="device_type"
@@ -283,7 +299,6 @@ const save = () => {
                                                 >Device Model</label
                                             >
                                             <input
-                                                required
                                                 type="text"
                                                 v-model="form.device_model"
                                                 name="device_model"
@@ -302,7 +317,6 @@ const save = () => {
                                                 >Device Location</label
                                             >
                                             <input
-                                                required
                                                 type="text"
                                                 v-model="form.location"
                                                 name="location"
@@ -322,7 +336,6 @@ const save = () => {
                                                 Status</label
                                             >
                                             <select
-                                                required
                                                 id="status"
                                                 v-model="form.status"
                                                 name="status"
@@ -377,11 +390,11 @@ const save = () => {
                                         <span
                                             class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
                                         >
-                                            Save
+                                            Save Changes
                                         </span>
                                     </button>
                                     <Link
-                                        :href="route('switch.page')"
+                                        :href="route('wirelless.page')"
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
                                     >
                                         <span

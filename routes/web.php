@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
 use App\Http\Controllers\InvApController;
 use App\Http\Controllers\InvSwitchController;
+use App\Http\Controllers\InvWirellessController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -54,6 +55,14 @@ Route::middleware('auth')->group(function () {
         Route::put('/switch/{swId}/update', [InvSwitchController::class, 'update'])->name('switch.update');
         Route::delete('/switch/{swId}/delete', [InvSwitchController::class, 'destroy'])->name('switch.delete');
         Route::post('/uploadCsv', [InvSwitchController::class, 'uploadCsv'])->name('switch.import');
+
+        Route::get('/wirelless', [InvWirellessController::class, 'index'])->name('wirelless.page');
+        Route::get('/wirelless/create', [InvWirellessController::class, 'create'])->name('wirelless.create');
+        Route::post('/wirelless/create', [InvWirellessController::class, 'store'])->name('wirelless.store');
+        Route::get('/wirelless/{id}/edit', [InvWirellessController::class, 'edit'])->name('wirelless.edit');
+        Route::put('/wirelless/{id}/update', [InvWirellessController::class, 'update'])->name('wirelless.update');
+        Route::delete('/wirelless/{id}/delete', [InvWirellessController::class, 'destroy'])->name('wirelless.delete');
+        Route::post('/uploadCsv', [InvWirellessController::class, 'uploadCsv'])->name('wirelless.import');
     });
 });
 

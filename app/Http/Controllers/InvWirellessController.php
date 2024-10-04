@@ -2,19 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\WirellessImport;
 use App\Models\InvWirelless;
 use Carbon\Carbon;
+use Dedoc\Scramble\Scramble;
+use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use League\Csv\Reader;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InvWirellessController extends Controller
 {
     public function index()
     {
-        $invWrilless = InvWirelless::all();
-        return response()->json($invWrilless);
+        $dataInventory = InvWirelless::all();
+        return Inertia::render('Inventory/Wirelless/Wirelless', ['wirelless' => $dataInventory]);
     }
 
-    public function store(Request $request)
+    public function create()
     {
         // start generate code
         $currentDate = Carbon::now();
@@ -22,42 +28,94 @@ class InvWirellessController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InvWirelless::max('id');
+        $maxId = InvWirelless::max('max_id');
 
         if (is_null($maxId)) {
             $maxId = 0;
         }
 
-        $uniqueString = 'PPABIBBB' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
+        $uniqueString = 'PPABIBSW' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
         $request['inventory_number'] = $uniqueString;
         // end generate code
 
-        $invWrilless_get_data = InvWirelless::find($request->id);
-        if (empty($invWrilless_get_data)) {
-            $invWrilless = InvWirelless::create($request->all());
-            return response()->json($invWrilless, 201);
-        } else {
-            $invWrilless = InvWirelless::firstWhere('id', $request->id)->update($request->all());
-            return response()->json($invWrilless, 201);
+        return Inertia::render('Inventory/Wirelless/WirellessCreate', ['inventoryNumber' => $uniqueString]);
+    }
+
+    public function store(Request $request)
+    {
+        $maxId = InvWirelless::max('max_id');
+        if (is_null($maxId)) {
+            $maxId = 1;
+        }else{
+            $maxId = $maxId + 1;
+        }
+        $params = $request->all();
+        $data = [
+            'max_id' => $maxId,
+            'device_name' => $params['device_name'],
+            'inventory_number' => $params['inventory_number'],
+            'asset_ho_number' => $params['asset_ho_number'],
+            'serial_number' => $params['serial_number'],
+            'frequency' => $params['frequency'],
+            'mac_address' => $params['mac_address'],
+            'ip_address' => $params['ip_address'],
+            'device_brand' => $params['device_brand'],
+            'device_type' => $params['device_type'],
+            'device_model' => $params['device_model'],
+            'location' => $params['location'],
+            'status' => $params['status'],
+            'note' => $params['note'],
+        ];
+        // DB::table('inv_aps')->insert($data);
+        InvWirelless::create($data);
+        return redirect()->route('wirelless.page');
+    }
+
+    public function uploadCsv(Request $request)
+    {
+        try {
+
+            Excel::import(new WirellessImport, $request->file('file'));
+            return redirect()->route('wirelless.page');
+        } catch (\Exception $ex) {
+            Log::info($ex);
+            return response()->json(['data' => 'Some error has occur.', 400]);
         }
     }
 
-    public function show($id)
+    public function edit($id)
     {
-        $invWrilless = InvWirelless::find($id);
-        if (is_null($invWrilless)) {
-            return response()->json(['message' => 'Wirelless Device not found'], 404);
-        }
-        return response()->json($invWrilless);
+        $wirelless = InvWirelless::find($id);
+        return Inertia::render('Inventory/Wirelless/WirellessEdit', ['wirelless' => $wirelless]);
+    }
+
+    public function update(Request $request)
+    {
+        $params = $request->all();
+        $data = [
+            'device_name' => $params['device_name'],
+            'inventory_number' => $params['inventory_number'],
+            'asset_ho_number' => $params['asset_ho_number'],
+            'serial_number' => $params['serial_number'],
+            'frequency' => $params['frequency'],
+            'mac_address' => $params['mac_address'],
+            'ip_address' => $params['ip_address'],
+            'device_brand' => $params['device_brand'],
+            'device_type' => $params['device_type'],
+            'device_model' => $params['device_model'],
+            'location' => $params['location'],
+            'status' => $params['status'],
+            'note' => $params['note'],
+        ];
+        InvWirelless::firstWhere('id', $request->id)->update($data);
+        return redirect()->route('wirelless.page');
     }
 
     public function destroy($id)
     {
-        $invWrilless = InvWirelless::find($id);
-        if (is_null($invWrilless)) {
-            return response()->json(['message' => 'Wirelless Device not found'], 404);
-        }
-        $invWrilless->delete();
-        return response()->json(null, 204);
+        $wirelless = InvWirelless::find($id);
+        // return response()->json(['ap' => $wirelless]);
+        $wirelless->delete();
+        return redirect()->back();
     }
 }

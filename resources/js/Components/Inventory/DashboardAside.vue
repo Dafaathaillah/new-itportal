@@ -36,40 +36,25 @@ const toggleLevel3 = () => {
                 class="absolute top-0 right-0 p-4 opacity-50 cursor-pointer fas fa-times dark:text-white text-slate-400 xl:hidden"
                 sidenav-close
             ></i>
-            <a
+            <div
                 class="block px-8 py-6 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700"
-                href="https://demos.creative-tim.com/argon-dashboard-tailwind/pages/dashboard.html"
-                target="_blank"
             >
                 <img
-                    src="/assets/img/logo-ct-dark.png"
-                    class="inline h-full max-w-full transition-all duration-200 dark:hidden ease-nav-brand max-h-8"
-                    alt="main_logo"
-                />
-                <img
-                    src="/assets/img/logo-ct.png"
-                    class="hidden h-full max-w-full transition-all duration-200 dark:inline ease-nav-brand max-h-8"
+                    src="/assets/img/logoppa.png"
+                    class="inline transition-all duration-200 dark:hidden ease-nav-brand max-h-8 mr-2"
                     alt="main_logo"
                 />
                 <span
                     class="ml-1 font-semibold transition-all duration-200 ease-nav-brand"
-                    >Argon Dashboard 2</span
+                    >ICT - PPA INVENTORY</span
                 >
-            </a>
+            </div>
         </div>
 
         <hr
             class="h-px mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
         />
 
-        <div>
-            <button
-                ref="okBtn"
-                @click.prevent="
-                    useDropDown(route().current('accessPoint.page'))
-                "
-            ></button>
-        </div>
 
         <div class="items-center block w-auto max-h-screen grow basis-full">
             <ul class="flex flex-col pl-0 mb-0">
@@ -178,12 +163,12 @@ const toggleLevel3 = () => {
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                         >
                             <i
-                                class="relative top-0 text-sm leading-normal text-red-700 ni ni-calendar-grid-58"
+                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-warehouse"
                             ></i>
                         </div>
                         <span
                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                            >Inventory</span
+                            >Site PPA - BIB</span
                         >
                         <i
                             v-if="!level1Open"
@@ -201,7 +186,7 @@ const toggleLevel3 = () => {
                                 class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                             >
                                 <i
-                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
                                 ></i>
                             </div>
                             <span
@@ -226,6 +211,24 @@ const toggleLevel3 = () => {
                                 >Switch</span
                             >
                         </NavLink>
+                         <NavLink
+                            :href="route('wirelless.page')"
+                            :active="route().current('wirelless.page')"
+                            @click="toggleLevel2"
+                        >
+                            <div
+                                class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                            >
+                                <i
+                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                ></i>
+                            </div>
+                            <span
+                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                >Wirelless</span
+                            >
+                        </NavLink>
+                        
                     </ul>
                 </li>
             </ul>
