@@ -228,6 +228,23 @@ const toggleLevel3 = () => {
                                 >Wirelless</span
                             >
                         </NavLink>
+                         <NavLink
+                            :href="route('laptop.page')"
+                            :active="route().current('laptop.page')"
+                            @click="toggleLevel2"
+                        >
+                            <div
+                                class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                            >
+                                <i
+                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop"
+                                ></i>
+                            </div>
+                            <span
+                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                >Laptop Fixed</span
+                            >
+                        </NavLink>
                         
                     </ul>
                 </li>

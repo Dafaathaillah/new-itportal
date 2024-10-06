@@ -13,16 +13,20 @@ return new class extends Migration
     {
         Schema::create('inv_switches', function (Blueprint $table) {
             $table->id();
+            $table->string('max_id', 255);
             $table->string('device_name', 255);
             $table->string('inventory_number', 255);
+            $table->string('asset_ho_number', 255);
             $table->string('serial_number', 255);
+            $table->string('mac_address', 255);
             $table->string('ip_address', 255);
-            $table->longText('device_brand');
+            $table->string('device_brand', 255);
             $table->string('device_type', 255);
             $table->string('device_model', 255);
             $table->string('location', 255);
             $table->string('status', 255);
-            $table->string('note', 255);
+            $table->longText('note');
+            $table->string('inspection_remark', 255);
             $table->timestamps();
         });
     }

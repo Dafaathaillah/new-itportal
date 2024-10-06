@@ -10,6 +10,7 @@ class InvLaptop extends Model
     use HasFactory;
 
     protected $fillable = [
+        'max_id',
         'laptop_name',
         'laptop_code',
         'number_asset_ho',

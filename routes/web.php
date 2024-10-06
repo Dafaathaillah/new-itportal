@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
 use App\Http\Controllers\InvApController;
+use App\Http\Controllers\InvLaptopController;
 use App\Http\Controllers\InvSwitchController;
 use App\Http\Controllers\InvWirellessController;
 use App\Http\Controllers\ProfileController;
@@ -63,6 +64,14 @@ Route::middleware('auth')->group(function () {
         Route::put('/wirelless/{id}/update', [InvWirellessController::class, 'update'])->name('wirelless.update');
         Route::delete('/wirelless/{id}/delete', [InvWirellessController::class, 'destroy'])->name('wirelless.delete');
         Route::post('/uploadCsv', [InvWirellessController::class, 'uploadCsv'])->name('wirelless.import');
+
+        Route::get('/laptop', [InvLaptopController::class, 'index'])->name('laptop.page');
+        Route::get('/laptop/create', [InvLaptopController::class, 'create'])->name('laptop.create');
+        Route::post('/laptop/create', [InvLaptopController::class, 'store'])->name('laptop.store');
+        Route::get('/laptop/{id}/edit', [InvLaptopController::class, 'edit'])->name('laptop.edit');
+        Route::put('/laptop/{id}/update', [InvLaptopController::class, 'update'])->name('laptop.update');
+        Route::delete('/laptop/{id}/delete', [InvLaptopController::class, 'destroy'])->name('laptop.delete');
+        Route::post('/uploadCsv', [InvLaptopController::class, 'uploadCsv'])->name('laptop.import');
     });
 });
 

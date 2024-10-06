@@ -4,60 +4,137 @@ namespace App\Http\Controllers;
 
 use App\Models\InvLaptop;
 use Carbon\Carbon;
+use Dedoc\Scramble\Scramble;
+use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use League\Csv\Reader;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InvLaptopController extends Controller
 {
     public function index()
     {
-        $invLaptop = InvLaptop::all();
-        return response()->json($invLaptop);
+        $dataInventory = InvLaptop::all();
+        return Inertia::render('Inventory/Laptop/Laptop', ['laptop' => $dataInventory]);
     }
 
-    public function store(Request $request)
+    public function create()
     {
         // start generate code
-        $currentDate = Carbon::now();
+        $currentDate = Carbon::tomorrow();
         $year = $currentDate->format('y');
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InvLaptop::max('id');
+        $maxId = InvLaptop::max('max_id');
 
         if (is_null($maxId)) {
             $maxId = 0;
         }
 
         $uniqueString = 'PPABIBNB' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
-        $request['laptop_code'] = $uniqueString;
+        $request['inventory_number'] = $uniqueString;
         // end generate code
 
-        $invLaptop_get_data = InvLaptop::find($request->id);
-        if (empty($invLaptop_get_data)) {
-            $invLaptop = InvLaptop::create($request->all());
-            return response()->json($invLaptop, 201);
+        return Inertia::render('Inventory/Laptop/LaptopCreate', ['inventoryNumber' => $uniqueString]);
+    }
+
+    public function store(Request $request)
+    {
+        $maxId = InvLaptop::max('max_id');
+        if (is_null($maxId)) {
+            $maxId = 1;
         } else {
-            $invLaptop = InvLaptop::firstWhere('id', $request->id)->update($request->all());
-            return response()->json($invLaptop, 201);
+            $maxId = $maxId + 1;
         }
+        $params = $request->all();
+        $data = [
+            'max_id' => $maxId,
+            'laptop_name' => $params['laptop_name'],
+            'laptop_code' => $params['laptop_code'],
+            'number_asset_ho' => $params['number_asset_ho'],
+            'assets_category' => $params['assets_category'],
+            'spesifikasi' => $params['model'] . ', ' . $params['processor'] . ', ' . $params['hdd'] . ', ' . $params['ssd'] . ', ' . $params['ram'] . ', ' . $params['vga'] . ', ' . $params['warna_laptop'] . ', ' . $params['os_laptop'],
+            'serial_number' => $params['serial_number'],
+            'aplikasi' => $params['aplikasi'],
+            'license' => $params['license'],
+            'ip_address' => $params['ip_address'],
+            'date_of_inventory' => $params['date_of_inventory'],
+            'date_of_deploy' => $params['date_of_deploy'],
+            'location' => $params['location'],
+            'status' => $params['status'],
+            'condition' => $params['condition'],
+            'note' => $params['note'],
+            'link_documentation_asset_image' => $params['link_documentation_asset_image'],
+            'user_alls_id' => $params['user_alls_id'],
+        ];
+        // dd($data);
+        // DB::table('inv_aps')->insert($data);
+        InvLaptop::create($data);
+        return redirect()->route('accessPoint.page');
+    }
+
+    public function uploadCsv(Request $request)
+    {
+        try {
+
+            Excel::import(new ImportAp, $request->file('file'));
+            return redirect()->route('accessPoint.page');
+        } catch (\Exception $ex) {
+            Log::info($ex);
+            return response()->json(['data' => 'Some error has occur.', 400]);
+        }
+    }
+
+    public function edit($apId)
+    {
+        $laptop = InvLaptop::find($apId);
+        // return response()->json(['ap' => $laptop]);
+        return Inertia::render('Inventory/Laptop/LaptopEdit', ['laptop' => $laptop]);
     }
 
     public function show($id)
     {
-        $invLaptop = InvLaptop::find($id);
-        if (is_null($invLaptop)) {
+        $invap = InvLaptop::find($id);
+        if (is_null($invap)) {
             return response()->json(['message' => 'Laptop Data not found'], 404);
         }
-        return response()->json($invLaptop);
+        return response()->json($invap);
     }
 
-    public function destroy($id)
+    public function update(Request $request)
     {
-        $invLaptop = InvLaptop::find($id);
-        if (is_null($invLaptop)) {
-            return response()->json(['message' => 'Laptop Data not found'], 404);
-        }
-        $invLaptop->delete();
-        return response()->json(null, 204);
+        $params = $request->all();
+        $data = [
+            'laptop_name' => $params['laptop_name'],
+            'laptop_code' => $params['laptop_code'],
+            'number_asset_ho' => $params['number_asset_ho'],
+            'assets_category' => $params['assets_category'],
+            'spesifikasi' => $params['spesifikasi'],
+            'serial_number' => $params['serial_number'],
+            'aplikasi' => $params['aplikasi'],
+            'license' => $params['license'],
+            'ip_address' => $params['ip_address'],
+            'date_of_inventory' => $params['date_of_inventory'],
+            'date_of_deploy' => $params['date_of_deploy'],
+            'location' => $params['location'],
+            'status' => $params['status'],
+            'condition' => $params['condition'],
+            'note' => $params['note'],
+            'link_documentation_asset_image' => $params['link_documentation_asset_image'],
+            'user_alls_id' => $params['user_alls_id'],
+        ];
+        // DB::table('inv_aps')->insert($data);
+        InvLaptop::firstWhere('id', $request->id)->update($data);
+        return redirect()->route('accessPoint.page');
+    }
+
+    public function destroy($apId)
+    {
+        $laptop = InvLaptop::find($apId);
+        // return response()->json(['ap' => $laptop]);
+        $laptop->delete();
+        return redirect()->back();
     }
 }
