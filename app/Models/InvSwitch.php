@@ -15,7 +15,6 @@ class InvSwitch extends Model
         'inventory_number',
         'asset_ho_number',
         'serial_number',
-        'frequency',
         'mac_address',
         'ip_address',
         'device_brand',

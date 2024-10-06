@@ -157,8 +157,8 @@ const submitCsv = () => {
                                     />
                                 </div>
                             </div>
-                            <div
-                                class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                             <div
+                                class="max-w-full shrink-0"
                             >
                                 <button
                                     type="submit"
@@ -167,6 +167,20 @@ const submitCsv = () => {
                                     <i class="fas fa-file-import"></i>
                                     Import
                                 </button>
+                            </div>
+                             <div
+                                class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                            >
+                                <a
+                                    href="/sampleSW.xlsx"
+                                    download="Format-Import-Data-Switch.xlsx"
+                                    target="_blank"
+                                    type="button"
+                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                                >
+                                    <i class="fas fa-download"></i>
+                                    Format Excel Data
+                                </a>
                             </div>
                         </div>
                     </form>
@@ -229,11 +243,6 @@ const submitCsv = () => {
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
                                                         Device Type
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Frequency
                                                     </th>
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
@@ -352,17 +361,6 @@ const submitCsv = () => {
                                                         >
                                                             {{
                                                                 switchs.device_type
-                                                            }}
-                                                        </span>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <span
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            {{
-                                                                switchs.frequency
                                                             }}
                                                         </span>
                                                     </td>
