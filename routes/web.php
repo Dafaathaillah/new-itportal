@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/accessPoint/{apId}/edit', [InvApController::class, 'edit'])->name('accessPoint.edit');
         Route::put('/accessPoint/{apId}/update', [InvApController::class, 'update'])->name('accessPoint.update');
         Route::delete('/accessPoint/{apId}/delete', [InvApController::class, 'destroy'])->name('accessPoint.delete');
-        Route::post('/uploadCsv', [InvApController::class, 'uploadCsv'])->name('accessPoint.import');
+        Route::post('/uploadCsvAp', [InvApController::class, 'uploadCsv'])->name('accessPoint.import');
 
         Route::get('/switch', [InvSwitchController::class, 'index'])->name('switch.page');
         Route::get('/switch/create', [InvSwitchController::class, 'create'])->name('switch.create');
@@ -55,7 +55,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/switch/{swId}/edit', [InvSwitchController::class, 'edit'])->name('switch.edit');
         Route::put('/switch/{swId}/update', [InvSwitchController::class, 'update'])->name('switch.update');
         Route::delete('/switch/{swId}/delete', [InvSwitchController::class, 'destroy'])->name('switch.delete');
-        Route::post('/uploadCsv', [InvSwitchController::class, 'uploadCsv'])->name('switch.import');
+        Route::post('/uploadCsvSw', [InvSwitchController::class, 'uploadCsv'])->name('switch.import');
 
         Route::get('/wirelless', [InvWirellessController::class, 'index'])->name('wirelless.page');
         Route::get('/wirelless/create', [InvWirellessController::class, 'create'])->name('wirelless.create');
@@ -63,7 +63,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/wirelless/{id}/edit', [InvWirellessController::class, 'edit'])->name('wirelless.edit');
         Route::put('/wirelless/{id}/update', [InvWirellessController::class, 'update'])->name('wirelless.update');
         Route::delete('/wirelless/{id}/delete', [InvWirellessController::class, 'destroy'])->name('wirelless.delete');
-        Route::post('/uploadCsv', [InvWirellessController::class, 'uploadCsv'])->name('wirelless.import');
+        Route::post('/uploadCsvBb', [InvWirellessController::class, 'uploadCsv'])->name('wirelless.import');
 
         Route::get('/laptop', [InvLaptopController::class, 'index'])->name('laptop.page');
         Route::get('/laptop/create', [InvLaptopController::class, 'create'])->name('laptop.create');
@@ -71,7 +71,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/laptop/{id}/edit', [InvLaptopController::class, 'edit'])->name('laptop.edit');
         Route::put('/laptop/{id}/update', [InvLaptopController::class, 'update'])->name('laptop.update');
         Route::delete('/laptop/{id}/delete', [InvLaptopController::class, 'destroy'])->name('laptop.delete');
-        Route::post('/uploadCsv', [InvLaptopController::class, 'uploadCsv'])->name('laptop.import');
+        Route::post('/uploadCsvNb', [InvLaptopController::class, 'uploadCsv'])->name('laptop.import');
     });
 });
 

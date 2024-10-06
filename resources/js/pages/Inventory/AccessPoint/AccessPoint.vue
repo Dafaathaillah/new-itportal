@@ -153,9 +153,7 @@ const submitCsv = () => {
                                     />
                                 </div>
                             </div>
-                            <div
-                                class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
-                            >
+                                <div class="max-w-full shrink-0">
                                 <button
                                     type="submit"
                                     class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
@@ -163,6 +161,20 @@ const submitCsv = () => {
                                     <i class="fas fa-file-import"></i>
                                     Import
                                 </button>
+                            </div>
+                            <div
+                                class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                            >
+                                <a
+                                    href="/sampleAP.xlsx"
+                                    download="Format-Import-Data-AP.xlsx"
+                                    target="_blank"
+                                    type="button"
+                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                                >
+                                    <i class="fas fa-download"></i>
+                                    Format Excel Data
+                                </a>
                             </div>
                         </div>
                     </form>

@@ -13,14 +13,14 @@ class ImportAp implements ToModel, WithStartRow
      *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public function startCell(): string
-    {
-        return 'B2'; // Mulai dari sel B3, sesuaikan dengan kebutuhanmu
-    }
+    // public function startCell(): string
+    // {
+    //     return 'B1'; // Mulai dari sel B3, sesuaikan dengan kebutuhanmu
+    // }
 
     public function startRow(): int
     {
-        return 2; // Mulai dari baris kedua
+        return 17; // Mulai dari baris kedua
     }
 
     public function model(array $row)

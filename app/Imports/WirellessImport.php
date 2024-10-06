@@ -4,8 +4,9 @@ namespace App\Imports;
 
 use App\Models\InvWirelless;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 
-class WirellessImport implements ToModel
+class WirellessImport implements ToModel, WithStartRow
 {
     /**
      * @param array $row
@@ -13,14 +14,9 @@ class WirellessImport implements ToModel
      * @return \Illuminate\Database\Eloquent\Model|null
      */
 
-    public function startCell(): string
-    {
-        return 'B2'; // Mulai dari sel B3, sesuaikan dengan kebutuhanmu
-    }
-
     public function startRow(): int
     {
-        return 2; // Mulai dari baris kedua
+        return 17; // Mulai dari baris kedua
     }
 
     public function model(array $row)

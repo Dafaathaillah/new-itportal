@@ -4,27 +4,27 @@ namespace App\Imports;
 
 use App\Models\InvSwitch;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 
-class SwitchImport implements ToModel
+class SwitchImport implements ToModel, WithStartRow
 {
     /**
     * @param array $row
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
-    public function startCell(): string
-    {
-        return 'A17'; // Mulai dari sel B3, sesuaikan dengan kebutuhanmu
-    }
+    // public function startCell(): string
+    // {
+    //     return 'B3';
+    // }
 
     public function startRow(): int
     {
-        return 17; // Mulai dari baris kedua
+        return 17;  
     }
 
     public function model(array $row)
     {
-        dd($row);
         return new InvSwitch([
             'max_id' => $row[0],
             'device_name' => $row[1],
