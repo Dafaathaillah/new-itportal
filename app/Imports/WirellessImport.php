@@ -22,17 +22,17 @@ class WirellessImport implements ToModel, WithStartRow
     public function model(array $row)
     {
         return new InvWirelless([
-            'max_id' => 2,
-            'device_name' => $row[0],
-            'inventory_number' => $row[1],
-            'serial_number' => $row[2],
-            'ip_address' => $row[3],
-            'device_brand' => $row[4],
-            'device_type' => $row[5],
-            'device_model' => $row[6],
-            'location' => $row[7],
-            'status' => $row[8],
-            'note' => $row[9],
+            'max_id' => $row[0],
+            'device_name' => $row[1],
+            'inventory_number' => $row[2],
+            'serial_number' => $row[3],
+            'ip_address' => $row[4],
+            'device_brand' => $row[5],
+            'device_type' => $row[6],
+            'device_model' => $row[7],
+            'location' => $row[8],
+            'status' => $row[9],
+            'note' => $row[10],
         ]);
     }
 }

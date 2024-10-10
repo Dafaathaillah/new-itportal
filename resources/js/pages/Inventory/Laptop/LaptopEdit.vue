@@ -3,75 +3,119 @@ import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
 import { Link } from "@inertiajs/vue3";
 import { Head, useForm } from "@inertiajs/vue3";
 import Swal from "sweetalert2";
+import { Inertia } from "@inertiajs/inertia";
 import { ref } from "vue";
 
-const props = defineProps(["laptop"]);
+const props = defineProps([
+    "laptop",
+    "model",
+    "processor",
+    "hdd",
+    "ssd",
+    "ram",
+    "ram",
+    "vga",
+    "warna_laptop",
+    "os_laptop",
+]);
 
 const form = useForm({
     id: props.laptop.id,
-    device_name: props.laptop.device_name,
-    inventory_number: props.laptop.inventory_number,
-    asset_ho_number: props.laptop.asset_ho_number,
+    max_id: props.laptop.max_id,
+    laptop_name: props.laptop.laptop_name,
+    laptop_code: props.laptop.laptop_code,
+    number_asset_ho: props.laptop.number_asset_ho,
+    assets_category: props.laptop.assets_category,
+    model: props.model,
+    processor: props.processor,
+    hdd: props.hdd,
+    ssd: props.ssd,
+    ram: props.ram,
+    vga: props.vga,
+    warna_laptop: props.warna_laptop,
+    os_laptop: props.os_laptop,
     serial_number: props.laptop.serial_number,
-    frequency: props.laptop.frequency,
-    mac_address: props.laptop.mac_address,
+    aplikasi: props.laptop.aplikasi,
+    license: props.laptop.license,
     ip_address: props.laptop.ip_address,
-    device_brand: props.laptop.device_brand,
-    device_type: props.laptop.device_type,
-    device_model: props.laptop.device_model,
+    date_of_inventory: props.laptop.date_of_inventory,
+    date_of_deploy: props.laptop.date_of_deploy,
     location: props.laptop.location,
     status: props.laptop.status,
+    condition: props.laptop.condition,
     note: props.laptop.note,
+    link_documentation_asset_image: props.laptop.link_documentation_asset_image,
+    user_alls_id: props.laptop.user_alls_id,
 });
 
 const isDisabled = ref(true);
+const file = ref(null);
 
-const update = () => {
-    form.put(route("laptop.update", props.laptop.id), {
-        onSuccess: () => {
-            // Show SweetAlert2 success notification
-            Swal.fire({
-                title: "Success!",
-                text: "Data has been successfully updated!",
-                icon: "success",
-                confirmButtonText: "OK",
-                confirmButtonColor: "#3085d6",
-            });
-        },
-        onError: () => {
-            Swal.fire({
-                title: "error!",
-                text: "Data not updated!",
-                icon: "waring",
-                confirmButtonText: "OK",
-                confirmButtonColor: "#3085d6",
-            });
-        },
-    });
+const handleFileUpload = (event) => {
+    file.value = event.target.files[0];
 };
 
-const save = () => {
-    form.post(route("laptop.store"), {
-        onSuccess: () => {
-            // Show SweetAlert2 success notification
-            Swal.fire({
-                title: "Success!",
-                text: "Data has been successfully created!",
-                icon: "success",
-                confirmButtonText: "OK",
-                confirmButtonColor: "#3085d6",
-            });
-        },
-        onError: () => {
-            Swal.fire({
-                title: "error!",
-                text: "Data not created!",
-                icon: "waring",
-                confirmButtonText: "OK",
-                confirmButtonColor: "#3085d6",
-            });
+const update = () => {
+    const formData = new FormData();
+    formData.append("id", form.id);
+    formData.append("max_id", form.max_id);
+    formData.append("laptop_name", form.laptop_name);
+    formData.append("laptop_code", form.laptop_code);
+    formData.append("number_asset_ho", form.number_asset_ho);
+    formData.append("assets_category", form.assets_category);
+    formData.append("model", form.model);
+    formData.append("processor", form.processor);
+    formData.append("hdd", form.hdd);
+    formData.append("ssd", form.ssd);
+    formData.append("ram", form.ram);
+    formData.append("vga", form.vga);
+    formData.append("warna_laptop", form.warna_laptop);
+    formData.append("os_laptop", form.os_laptop);
+    formData.append("serial_number", form.serial_number);
+    formData.append("aplikasi", form.aplikasi);
+    formData.append("license", form.license);
+    formData.append("ip_address", form.ip_address);
+    formData.append("date_of_inventory", form.date_of_inventory);
+    formData.append("date_of_deploy", form.date_of_deploy);
+    formData.append("location", form.location);
+    formData.append("status", form.status);
+    formData.append("condition", form.condition);
+    formData.append("note", form.note);
+    formData.append("user_alls_id", form.user_alls_id);
+
+    if (file.value) {
+        formData.append("image", file.value); // Append the file
+    }
+
+    Inertia.post(route("laptop.update", props.laptop.id), formData, {
+        // Use route name here
+        onProgress: (progress) => {
+            console.log(formData.append); // Track the upload progress
         },
     });
+
+    // Inertia.post(route("laptop.store"), formData, {
+    //     forceFormData: true,
+    //     onSuccess: () => {
+    //         // Show SweetAlert2 success notification
+    //         Swal.fire({
+    //             title: "Success!",
+    //             text: "Data has been successfully updated!",
+    //             icon: "success",
+    //             confirmButtonText: "OK",
+    //             confirmButtonColor: "#3085d6",
+    //         });
+    //     },
+    //     onError: () => {
+    //         Swal.fire({
+    //             title: "error!",
+    //             text: "Data not updated!",
+    //             icon: "waring",
+    //             confirmButtonText: "OK",
+    //             confirmButtonColor: "#3085d6",
+    //         });
+    //     },
+    // });
 };
 </script>
 
@@ -132,14 +176,15 @@ const save = () => {
                                             <label
                                                 for="device-name"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Device Name</label
+                                                >Laptop Name</label
                                             >
                                             <input
+                                                required
                                                 type="text"
-                                                name="device_name"
-                                                v-model="form.device_name"
+                                                name="laptop_name"
+                                                v-model="form.laptop_name"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="Device Name"
+                                                placeholder="Laptop Name"
                                             />
                                         </div>
                                     </div>
@@ -148,18 +193,19 @@ const save = () => {
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="inventory-number"
+                                                for="laptop-code"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Inventory Number</label
+                                                >Laptop Code</label
                                             >
                                             <input
                                                 :disabled="isDisabled"
+                                                required
                                                 type="text"
-                                                name="inventory_number"
-                                                v-model="form.inventory_number"
+                                                name="laptop_code"
+                                                v-model="form.laptop_code"
                                                 value="1"
                                                 class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Auto Generate Inventory Number"
+                                                placeholder="Auto Generate Laptop Code"
                                             />
                                         </div>
                                     </div>
@@ -168,14 +214,196 @@ const save = () => {
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="asset-ho-number"
+                                                for="number-asset-ho"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                                 >Asset Ho Number</label
                                             >
                                             <input
+                                                required
                                                 type="text"
-                                                v-model="form.asset_ho_number"
-                                                name="asset_ho_number"
+                                                v-model="form.number_asset_ho"
+                                                name="number_asset_ho"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="00:04:xx:xx:xx:xx"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="assets-category"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Catgeory</label
+                                            >
+                                            <select
+                                                required
+                                                id="assets_category"
+                                                v-model="form.assets_category"
+                                                name="assets_category"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            >
+                                                <option selected value="Baru">
+                                                    BARU
+                                                </option>
+                                                <option value="Lama">
+                                                    LAMA
+                                                </option>
+                                                <option value="Mutasian">
+                                                    MUTASI (dari site lain)
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="model"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Model</label
+                                            >
+                                            <input
+                                                required
+                                                type="text"
+                                                v-model="form.model"
+                                                name="model"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="00:04:xx:xx:xx:xx"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="processor"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Processor</label
+                                            >
+                                            <input
+                                                required
+                                                type="text"
+                                                v-model="form.processor"
+                                                name="processor"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="00:04:xx:xx:xx:xx"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="hdd"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Hdd</label
+                                            >
+                                            <input
+                                                required
+                                                type="text"
+                                                v-model="form.hdd"
+                                                name="hdd"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="00:04:xx:xx:xx:xx"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="ssd"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Ssd</label
+                                            >
+                                            <input
+                                                required
+                                                type="text"
+                                                v-model="form.ssd"
+                                                name="ssd"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="00:04:xx:xx:xx:xx"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="ram"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Ram</label
+                                            >
+                                            <input
+                                                required
+                                                type="text"
+                                                v-model="form.ram"
+                                                name="ram"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="00:04:xx:xx:xx:xx"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="vga"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Vga</label
+                                            >
+                                            <input
+                                                required
+                                                type="text"
+                                                v-model="form.vga"
+                                                name="vga"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="00:04:xx:xx:xx:xx"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="warna_laptop"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Warna Laptop</label
+                                            >
+                                            <input
+                                                required
+                                                type="text"
+                                                v-model="form.warna_laptop"
+                                                name="warna_laptop"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="00:04:xx:xx:xx:xx"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="os_laptop"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Os Laptop</label
+                                            >
+                                            <input
+                                                required
+                                                type="text"
+                                                v-model="form.os_laptop"
+                                                name="os_laptop"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
                                                 placeholder="00:04:xx:xx:xx:xx"
                                             />
@@ -191,6 +419,7 @@ const save = () => {
                                                 >Serial Number</label
                                             >
                                             <input
+                                                required
                                                 type="text"
                                                 v-model="form.serial_number"
                                                 name="serial_number"
@@ -199,6 +428,45 @@ const save = () => {
                                             />
                                         </div>
                                     </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="aplikasi"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Aplikasi</label
+                                            >
+                                            <input
+                                                required
+                                                type="text"
+                                                v-model="form.aplikasi"
+                                                name="aplikasi"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="00:04:xx:xx:xx:xx"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="license"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >License</label
+                                            >
+                                            <input
+                                                required
+                                                type="text"
+                                                v-model="form.license"
+                                                name="license"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="00:04:xx:xx:xx:xx"
+                                            />
+                                        </div>
+                                    </div>
+
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
@@ -217,55 +485,20 @@ const save = () => {
                                             />
                                         </div>
                                     </div>
-                                      <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="frequency"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Frequency</label
-                                            >
-                                            <input
-                                                type="text"
-                                                v-model="form.frequency"
-                                                name="frequency"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
-                                            />
-                                        </div>
-                                    </div>
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="mac_address"
+                                                for="date-of-inventory"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Mac Address</label
+                                                >Date Of Inventory</label
                                             >
                                             <input
-                                                type="text"
-                                                v-model="form.mac_address"
-                                                name="mac_address"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="10.1.x.xx"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="device-brand"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Device Brand</label
-                                            >
-                                            <input
-                                                type="text"
-                                                v-model="form.device_brand"
-                                                name="device_brand"
+                                                required
+                                                type="date"
+                                                v-model="form.date_of_inventory"
+                                                name="date_of_inventory"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
                                                 placeholder="Ubixxxxx"
                                             />
@@ -276,16 +509,17 @@ const save = () => {
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="device-type"
+                                                for="date-of-deploy"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Device Type</label
+                                                >Date Of Deploy</label
                                             >
                                             <input
-                                                type="text"
-                                                v-model="form.device_type"
-                                                name="device_type"
+                                                required
+                                                type="date"
+                                                v-model="form.date_of_deploy"
+                                                name="date_of_deploy"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="UAP-xx-MESH"
+                                                placeholder="Ubixxxxx"
                                             />
                                         </div>
                                     </div>
@@ -294,34 +528,17 @@ const save = () => {
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="device-model"
+                                                for="location"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Device Model</label
+                                                >Location</label
                                             >
                                             <input
-                                                type="text"
-                                                v-model="form.device_model"
-                                                name="device_model"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="2.4 / 5.8 Ghz"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="device-location"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Device Location</label
-                                            >
-                                            <input
+                                                required
                                                 type="text"
                                                 v-model="form.location"
                                                 name="location"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="Markas ICT"
+                                                placeholder="UAP-xx-MESH"
                                             />
                                         </div>
                                     </div>
@@ -336,6 +553,7 @@ const save = () => {
                                                 Status</label
                                             >
                                             <select
+                                                required
                                                 id="status"
                                                 v-model="form.status"
                                                 name="status"
@@ -357,6 +575,99 @@ const save = () => {
                                                     Breakdown
                                                 </option>
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="condition"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Condition</label
+                                            >
+                                            <input
+                                                required
+                                                type="text"
+                                                v-model="form.condition"
+                                                name="condition"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="2.4 / 5.8 Ghz"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="user_id"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >
+                                                Select User</label
+                                            >
+                                            <select
+                                                required
+                                                id="user_id"
+                                                v-model="form.user_id"
+                                                name="user_id"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            >
+                                                <option
+                                                    selected
+                                                    value="Ready_Used"
+                                                >
+                                                    Ready Used
+                                                </option>
+                                                <option value="Ready_Stanby">
+                                                    Ready Standby
+                                                </option>
+                                                <option value="Scrap">
+                                                    Scrap
+                                                </option>
+                                                <option value="Breakdown">
+                                                    Breakdown
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="link_documentation_asset_image"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Documentation Assets</label
+                                            >
+                                            <input
+                                                required
+                                                name="image"
+                                                type="file"
+                                                ref="fileInput"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="2.4 / 5.8 Ghz"
+                                                @change="handleFileUpload"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="link_documentation_asset_image"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Previous Images Documentation
+                                                Assets</label
+                                            >
+                                            <img
+                                                :src="
+                                                    form.link_documentation_asset_image
+                                                "
+                                                alt="documentation image"
+                                                class="w-200 shadow-2xl rounded-xl"
+                                            />
                                         </div>
                                     </div>
                                     <div
@@ -390,7 +701,7 @@ const save = () => {
                                         <span
                                             class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
                                         >
-                                            Save Changes
+                                            Save
                                         </span>
                                     </button>
                                     <Link

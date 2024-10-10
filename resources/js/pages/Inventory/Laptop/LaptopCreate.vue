@@ -3,6 +3,7 @@ import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
 import { Link } from "@inertiajs/vue3";
 import { Head, useForm } from "@inertiajs/vue3";
 import Swal from "sweetalert2";
+import { Inertia } from "@inertiajs/inertia";
 import { ref } from "vue";
 
 const props = defineProps(["inventoryNumber"]);
@@ -35,9 +36,43 @@ const form = useForm({
 });
 
 const isDisabled = ref(true);
+const file = ref(null);
 
+const handleFileUpload = (event) => {
+    file.value = event.target.files[0];
+};
 const save = () => {
-    form.post(route("laptop.store"), {
+    const formData = new FormData();
+    formData.append("image", file.value);
+    formData.append("laptop_name", form.laptop_name);
+    formData.append("laptop_code", form.laptop_code);
+    formData.append("number_asset_ho", form.number_asset_ho);
+    formData.append("assets_category", form.assets_category);
+    formData.append("model", form.model);
+    formData.append("processor", form.processor);
+    formData.append("hdd", form.hdd);
+    formData.append("ssd", form.ssd);
+    formData.append("ram", form.ram);
+    formData.append("vga", form.vga);
+    formData.append("warna_laptop", form.warna_laptop);
+    formData.append("os_laptop", form.os_laptop);
+    formData.append("serial_number", form.serial_number);
+    formData.append("aplikasi", form.aplikasi);
+    formData.append("license", form.license);
+    formData.append("ip_address", form.ip_address);
+    formData.append("date_of_inventory", form.date_of_inventory);
+    formData.append("date_of_deploy", form.date_of_deploy);
+    formData.append("location", form.location);
+    formData.append("status", form.status);
+    formData.append("condition", form.condition);
+    formData.append("note", form.note);
+    formData.append(
+        "link_documentation_asset_image",
+        form.link_documentation_asset_image
+    );
+    formData.append("user_alls_id", form.user_alls_id);
+    Inertia.post(route("laptop.store"), formData, {
+        forceFormData: true,
         onSuccess: () => {
             // Show SweetAlert2 success notification
             Swal.fire({
@@ -549,13 +584,11 @@ const save = () => {
                                             >
                                             <input
                                                 required
-                                                type="text"
-                                                v-model="
-                                                    form.link_documentation_asset_image
-                                                "
-                                                name="link_documentation_asset_image"
+                                                type="file"
+                                                ref="fileInput"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
                                                 placeholder="2.4 / 5.8 Ghz"
+                                                @change="handleFileUpload"
                                             />
                                         </div>
                                     </div>

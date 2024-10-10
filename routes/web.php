@@ -69,8 +69,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/laptop/create', [InvLaptopController::class, 'create'])->name('laptop.create');
         Route::post('/laptop/create', [InvLaptopController::class, 'store'])->name('laptop.store');
         Route::get('/laptop/{id}/edit', [InvLaptopController::class, 'edit'])->name('laptop.edit');
-        Route::put('/laptop/{id}/update', [InvLaptopController::class, 'update'])->name('laptop.update');
         Route::delete('/laptop/{id}/delete', [InvLaptopController::class, 'destroy'])->name('laptop.delete');
+        Route::post('/laptop/update', [InvLaptopController::class, 'update'])->name('laptop.update');
         Route::post('/uploadCsvNb', [InvLaptopController::class, 'uploadCsv'])->name('laptop.import');
     });
 });

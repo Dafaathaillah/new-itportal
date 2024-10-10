@@ -48,7 +48,15 @@ class InvLaptopController extends Controller
         } else {
             $maxId = $maxId + 1;
         }
+
         $params = $request->all();
+
+        $documentation_image = $request->file('image');
+        $destinationPath = 'images/';
+        $path_documentation_image = $documentation_image->store('images', 'public');
+        $new_path_documentation_image = $path_documentation_image;
+        $documentation_image->move($destinationPath, $new_path_documentation_image);
+
         $data = [
             'max_id' => $maxId,
             'laptop_name' => $params['laptop_name'],
@@ -66,13 +74,12 @@ class InvLaptopController extends Controller
             'status' => $params['status'],
             'condition' => $params['condition'],
             'note' => $params['note'],
-            'link_documentation_asset_image' => $params['link_documentation_asset_image'],
+            'link_documentation_asset_image' => url($new_path_documentation_image),
             'user_alls_id' => $params['user_alls_id'],
         ];
-        // dd($data);
-        // DB::table('inv_aps')->insert($data);
+        
         InvLaptop::create($data);
-        return redirect()->route('accessPoint.page');
+        return redirect()->route('laptop.page');
     }
 
     public function uploadCsv(Request $request)
@@ -80,18 +87,37 @@ class InvLaptopController extends Controller
         try {
 
             Excel::import(new ImportAp, $request->file('file'));
-            return redirect()->route('accessPoint.page');
+            return redirect()->route('laptop.page');
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);
         }
     }
 
-    public function edit($apId)
+    public function edit($id)
     {
-        $laptop = InvLaptop::find($apId);
+        $laptop = InvLaptop::find($id);
+        $spesifikasi = explode(',', $laptop->spesifikasi);
+        $model = trim($spesifikasi[0]);
+        $processor = trim($spesifikasi[1]);
+        $hdd = trim($spesifikasi[2]);
+        $ssd = trim($spesifikasi[3]);
+        $ram = trim($spesifikasi[4]);
+        $vga = trim($spesifikasi[5]);
+        $warna_laptop = trim($spesifikasi[6]);
+        $os_laptop = trim($spesifikasi[7]);
         // return response()->json(['ap' => $laptop]);
-        return Inertia::render('Inventory/Laptop/LaptopEdit', ['laptop' => $laptop]);
+        return Inertia::render('Inventory/Laptop/LaptopEdit', [
+            'laptop' => $laptop,
+            'model' => $model,
+            'processor' => $processor,
+            'hdd' => $hdd,
+            'ssd' => $ssd,
+            'ram' => $ram,
+            'vga' => $vga,
+            'warna_laptop' => $warna_laptop,
+            'os_laptop' => $os_laptop,
+        ]);
     }
 
     public function show($id)
@@ -105,34 +131,39 @@ class InvLaptopController extends Controller
 
     public function update(Request $request)
     {
-        $params = $request->all();
-        $data = [
-            'laptop_name' => $params['laptop_name'],
-            'laptop_code' => $params['laptop_code'],
-            'number_asset_ho' => $params['number_asset_ho'],
-            'assets_category' => $params['assets_category'],
-            'spesifikasi' => $params['spesifikasi'],
-            'serial_number' => $params['serial_number'],
-            'aplikasi' => $params['aplikasi'],
-            'license' => $params['license'],
-            'ip_address' => $params['ip_address'],
-            'date_of_inventory' => $params['date_of_inventory'],
-            'date_of_deploy' => $params['date_of_deploy'],
-            'location' => $params['location'],
-            'status' => $params['status'],
-            'condition' => $params['condition'],
-            'note' => $params['note'],
-            'link_documentation_asset_image' => $params['link_documentation_asset_image'],
-            'user_alls_id' => $params['user_alls_id'],
-        ];
-        // DB::table('inv_aps')->insert($data);
-        InvLaptop::firstWhere('id', $request->id)->update($data);
-        return redirect()->route('accessPoint.page');
-    }
+        $documentation_image = $request->file('image');
+        $destinationPath = 'images/';
+        $path_documentation_image = $documentation_image->store('images', 'public');
+        $new_path_documentation_image = $path_documentation_image;
+        $documentation_image->move($destinationPath, $new_path_documentation_image);
 
-    public function destroy($apId)
+        $data = [
+            'max_id' => $request->max_id,
+            'laptop_name' => $request->laptop_name,
+            'laptop_code' => $request->laptop_code,
+            'number_asset_ho' => $request->number_asset_ho,
+            'assets_category' => $request->assets_category,
+            'spesifikasi' => $request->model . ', ' . $request->processor . ', ' . $request->hdd . ', ' . $request->ssd . ', ' . $request->ram . ', ' . $request->vga . ', ' . $request->warna_laptop . ', ' . $request->os_laptop,
+            'serial_number' => $request->serial_number,
+            'aplikasi' => $request->aplikasi,
+            'license' => $request->license,
+            'ip_address' => $request->ip_address,
+            'date_of_inventory' => $request->date_of_inventory,
+            'date_of_deploy' => $request->date_of_deploy,
+            'location' => $request->location,
+            'status' => $request->status,
+            'condition' => $request->condition,
+            'note' => $request->note,
+            'link_documentation_asset_image' => url($new_path_documentation_image),
+            'user_alls_id' => null,
+        ];
+
+        $test = InvLaptop::firstWhere('id', $request->id)->update($data);
+        return redirect()->route('laptop.page');
+    }
+    public function destroy($id)
     {
-        $laptop = InvLaptop::find($apId);
+        $laptop = InvLaptop::find($id);
         // return response()->json(['ap' => $laptop]);
         $laptop->delete();
         return redirect()->back();
