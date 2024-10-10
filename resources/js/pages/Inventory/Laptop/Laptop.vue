@@ -483,10 +483,12 @@ function formatData(text) {
                                                         class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
                                                         <span
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            class="break-all mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                laptops.note
+                                                                formatData(
+                                                                    laptops.note
+                                                                )
                                                             }}
                                                         </span>
                                                     </td>
@@ -497,7 +499,9 @@ function formatData(text) {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             <img
-                                                                :src="laptops.link_documentation_asset_image"
+                                                                :src="
+                                                                    laptops.link_documentation_asset_image
+                                                                "
                                                                 alt="documentation image"
                                                                 class="w-30 h-20 shadow-2xl rounded-xl"
                                                             />

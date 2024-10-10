@@ -641,7 +641,6 @@ const update = () => {
                                                 >Documentation Assets</label
                                             >
                                             <input
-                                                required
                                                 name="image"
                                                 type="file"
                                                 ref="fileInput"

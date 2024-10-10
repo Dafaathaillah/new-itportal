@@ -131,34 +131,55 @@ class InvLaptopController extends Controller
 
     public function update(Request $request)
     {
-        $documentation_image = $request->file('image');
-        $destinationPath = 'images/';
-        $path_documentation_image = $documentation_image->store('images', 'public');
-        $new_path_documentation_image = $path_documentation_image;
-        $documentation_image->move($destinationPath, $new_path_documentation_image);
+        if (!empty($request->hasFile('image'))) {
+            $documentation_image = $request->file('image');
+            $destinationPath = 'images/';
+            $path_documentation_image = $documentation_image->store('images', 'public');
+            $new_path_documentation_image = $path_documentation_image;
+            $documentation_image->move($destinationPath, $new_path_documentation_image);
+            $data = [
+                'max_id' => $request->max_id,
+                'laptop_name' => $request->laptop_name,
+                'laptop_code' => $request->laptop_code,
+                'number_asset_ho' => $request->number_asset_ho,
+                'assets_category' => $request->assets_category,
+                'spesifikasi' => $request->model . ', ' . $request->processor . ', ' . $request->hdd . ', ' . $request->ssd . ', ' . $request->ram . ', ' . $request->vga . ', ' . $request->warna_laptop . ', ' . $request->os_laptop,
+                'serial_number' => $request->serial_number,
+                'aplikasi' => $request->aplikasi,
+                'license' => $request->license,
+                'ip_address' => $request->ip_address,
+                'date_of_inventory' => $request->date_of_inventory,
+                'date_of_deploy' => $request->date_of_deploy,
+                'location' => $request->location,
+                'status' => $request->status,
+                'condition' => $request->condition,
+                'note' => $request->note,
+                'link_documentation_asset_image' => url($new_path_documentation_image),
+                'user_alls_id' => null,
+            ];
+        } else {
+            $data = [
+                'max_id' => $request->max_id,
+                'laptop_name' => $request->laptop_name,
+                'laptop_code' => $request->laptop_code,
+                'number_asset_ho' => $request->number_asset_ho,
+                'assets_category' => $request->assets_category,
+                'spesifikasi' => $request->model . ', ' . $request->processor . ', ' . $request->hdd . ', ' . $request->ssd . ', ' . $request->ram . ', ' . $request->vga . ', ' . $request->warna_laptop . ', ' . $request->os_laptop,
+                'serial_number' => $request->serial_number,
+                'aplikasi' => $request->aplikasi,
+                'license' => $request->license,
+                'ip_address' => $request->ip_address,
+                'date_of_inventory' => $request->date_of_inventory,
+                'date_of_deploy' => $request->date_of_deploy,
+                'location' => $request->location,
+                'status' => $request->status,
+                'condition' => $request->condition,
+                'note' => $request->note,
+                'user_alls_id' => null,
+            ];
+        }
 
-        $data = [
-            'max_id' => $request->max_id,
-            'laptop_name' => $request->laptop_name,
-            'laptop_code' => $request->laptop_code,
-            'number_asset_ho' => $request->number_asset_ho,
-            'assets_category' => $request->assets_category,
-            'spesifikasi' => $request->model . ', ' . $request->processor . ', ' . $request->hdd . ', ' . $request->ssd . ', ' . $request->ram . ', ' . $request->vga . ', ' . $request->warna_laptop . ', ' . $request->os_laptop,
-            'serial_number' => $request->serial_number,
-            'aplikasi' => $request->aplikasi,
-            'license' => $request->license,
-            'ip_address' => $request->ip_address,
-            'date_of_inventory' => $request->date_of_inventory,
-            'date_of_deploy' => $request->date_of_deploy,
-            'location' => $request->location,
-            'status' => $request->status,
-            'condition' => $request->condition,
-            'note' => $request->note,
-            'link_documentation_asset_image' => url($new_path_documentation_image),
-            'user_alls_id' => null,
-        ];
-
-        $test = InvLaptop::firstWhere('id', $request->id)->update($data);
+        InvLaptop::firstWhere('id', $request->id)->update($data);
         return redirect()->route('laptop.page');
     }
     public function destroy($id)
