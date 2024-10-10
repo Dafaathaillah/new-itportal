@@ -40,7 +40,7 @@ class InvApController extends Controller
             $maxId = 0;
         }
 
-        $uniqueString = 'PPABIBAP' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
+        $uniqueString = 'PPABIBAP' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
         $request['inventory_number'] = $uniqueString;
         // end generate code
 

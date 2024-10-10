@@ -33,7 +33,7 @@ class InvLaptopController extends Controller
             $maxId = 0;
         }
 
-        $uniqueString = 'PPABIBNB' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
+        $uniqueString = 'PPABIBNB' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
         $request['inventory_number'] = $uniqueString;
         // end generate code
 
@@ -77,7 +77,7 @@ class InvLaptopController extends Controller
             'link_documentation_asset_image' => url($new_path_documentation_image),
             'user_alls_id' => $params['user_alls_id'],
         ];
-        
+
         InvLaptop::create($data);
         return redirect()->route('laptop.page');
     }
