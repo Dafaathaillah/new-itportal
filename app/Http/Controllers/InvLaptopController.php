@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Aduan;
+use App\Models\InspeksiLaptop;
 use App\Models\InvLaptop;
+use App\Models\UnscheduleJob;
 use Carbon\Carbon;
 use Dedoc\Scramble\Scramble;
-use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use League\Csv\Reader;
@@ -120,13 +122,25 @@ class InvLaptopController extends Controller
         ]);
     }
 
-    public function show($id)
+    public function detail($id)
     {
-        $invap = InvLaptop::find($id);
-        if (is_null($invap)) {
-            return response()->json(['message' => 'Laptop Data not found'], 404);
-        }
-        return response()->json($invap);
+        $laptop = InvLaptop::where('laptop_code', $id)->first();
+        $aduan = Aduan::where('inventory_number', $id)->get();
+        $unschedule = UnscheduleJob::where('inventory_number', $id)->get();
+        $inspeksi = InspeksiLaptop::with('inventory')
+        ->where('inv_laptop_id', $laptop->id) // Only get posts from user_id 1
+        ->get();
+        // return response()->json($inspeksi);
+        $merge = [
+            'aduan' => $aduan,
+            'inspeksi' => $inspeksi
+        ];
+        return Inertia::render('Inventory/Laptop/LaptopDetail', [
+            'laptop' => $laptop,
+            'aduan' => $aduan,
+            'inspeksi' => $inspeksi,
+            'unschedule' => $unschedule,
+        ]);
     }
 
     public function update(Request $request)

@@ -70,6 +70,10 @@ const editData = (id) => {
     });
 };
 
+const detailData = (id) => {
+    form.get(route("laptop.detail", { id: id }));
+};
+
 const file = ref(null);
 
 const handleFileUpload = (event) => {
@@ -532,6 +536,17 @@ function formatData(text) {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             Edit
+                                                        </NavLinkCustom>
+
+                                                        <NavLinkCustom
+                                                            @click="
+                                                                detailData(
+                                                                    laptops.laptop_code
+                                                                )
+                                                            "
+                                                            class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Detail
                                                         </NavLinkCustom>
 
                                                         <NavLinkCustom

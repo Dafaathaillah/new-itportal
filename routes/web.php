@@ -71,6 +71,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/laptop/{id}/edit', [InvLaptopController::class, 'edit'])->name('laptop.edit');
         Route::delete('/laptop/{id}/delete', [InvLaptopController::class, 'destroy'])->name('laptop.delete');
         Route::post('/laptop/update', [InvLaptopController::class, 'update'])->name('laptop.update');
+        Route::get('/laptop/{id}/detail', [InvLaptopController::class, 'detail'])->name('laptop.detail');
         Route::post('/uploadCsvNb', [InvLaptopController::class, 'uploadCsv'])->name('laptop.import');
     });
 });

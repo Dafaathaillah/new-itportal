@@ -45,4 +45,9 @@ class InspeksiLaptop extends Model
         'approved_by',
         'status_approval',
     ];
+
+    public function inventory()
+    {
+        return $this->belongsTo(InvLaptop::class, 'inv_laptop_id', 'id');
+    }
 }
